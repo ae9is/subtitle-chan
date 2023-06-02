@@ -37,7 +37,7 @@ Follow the steps below, or see this setup video for [jimakuChan](https://github.
 ## Steps:
 
 1. Go to https://script.google.com/ and create a new project
-1. Copy and paste (and save!) the following into the new project's script, overwriting the contents (it's OK to use jimakuChan's doGet() instead here):
+1. Copy and paste (and save!) the following into the new project's script, overwriting the contents *[it's OK to use jimakuChan's doGet() instead here]*:
     ```js
     function doGet(e) {
       const params = e.parameter
@@ -65,7 +65,7 @@ Follow the steps below, or see this setup video for [jimakuChan](https://github.
       return output;
     }
     ```
-1. Select Deploy -> New Deployment
+1. Select Deploy &rarr; New Deployment
 1. In the New Deployment dialogue, click the gear next to "Select type" and choose "Web app"
 1. Fill in the following settings and then Deploy
     - Execute as: Me
@@ -75,7 +75,7 @@ Follow the steps below, or see this setup video for [jimakuChan](https://github.
 Now that you've deployed your own translation api, you can enter the api key into subtitle-chan for translations to work. Please only put your api key into a web page you trust, and don't share it.
 
 If you run out of quota, you can:
-- Upgrade to a paid Google Workspace account (your quota will increase from 5k -> 20k calls per day)
+- Upgrade to a paid Google Workspace account (your quota will increase from 5k &rarr; 20k calls per day)
 - Try cycling api keys with another Google account
 
 Keep in mind that service providers keep tabs on traffic and can sometimes block the more flagrant violations of their apis.
