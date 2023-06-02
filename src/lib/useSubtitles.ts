@@ -81,6 +81,11 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
     }
   }
 
+  const reset = async () => {
+    resetTranscript()
+    setTranslation('')
+  }
+
   // Google Apps Script can throw CORS errors sometimes, even on GET
   // ref: https://stackoverflow.com/a/68933465
 
@@ -125,7 +130,7 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
   return {
     transcript: interimResults ? transcript : finalTranscript,
     listening,
-    resetTranscript,
+    reset,
     browserSupportsSpeechRecognition,
     isMicrophoneAvailable,
     translation,
