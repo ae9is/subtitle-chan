@@ -37,11 +37,28 @@ Follow the steps below, or see this setup video for [jimakuChan](https://github.
 ## Steps:
 
 1. Go to https://script.google.com/ and create a new project
-1. Copy and paste (and save!) the following into the new project's script, overwriting the contents:
+1. Copy and paste (and save!) the following into the new project's script, overwriting the contents (it's OK to use jimakuChan's doGet() instead here):
     ```js
     function doGet(e) {
       const params = e.parameter
-      var translatedText = LanguageApp.translate(params.text, params.source, params.target);
+      const text = params.text
+      let translatedText = ''
+      if (text) {
+        translatedText = LanguageApp.translate(text, params.source, params.target);
+      }
+      const output = ContentService.createTextOutput();
+      output.setMimeType(ContentService.MimeType.JSON);
+      output.setContent(translatedText);
+      return output;
+    }
+
+    function doPost(e) {
+      const params = e.parameter
+      const text = e.postData.contents
+      let translatedText = ''
+      if (text) {
+        translatedText = LanguageApp.translate(text, params.source, params.target);
+      }
       const output = ContentService.createTextOutput();
       output.setMimeType(ContentService.MimeType.JSON);
       output.setContent(translatedText);
