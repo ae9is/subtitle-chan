@@ -10,6 +10,7 @@ export interface SubtitleProps {
   fontSize?: number
   fontWeight?: number
   fontStrokeWidth?: number
+  inputId?: string
 }
 
 export function Subtitle(props: SubtitleProps) {
@@ -23,6 +24,7 @@ export function Subtitle(props: SubtitleProps) {
     fontSize,
     fontWeight,
     fontStrokeWidth,
+    inputId,
   } = props
 
   const textStroke = (fontStrokeWidth ?? '2') + 'px ' + (fontStrokeColor || 'black')
@@ -44,6 +46,7 @@ export function Subtitle(props: SubtitleProps) {
         }}
       >
         <textarea
+          id={inputId}
           className="text-4xl font-bold scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block"
           style={{
             fontFamily,

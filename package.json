@@ -46,12 +46,12 @@
     "update-packages": "ncu -u"
   },
   "dependencies": {
-    "@vitejs/plugin-react-swc": "^3.3.1",
+    "@vitejs/plugin-react-swc": "^3.3.2",
     "axios": "^1.4.0",
     "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-fontpicker-ts-lite": "^0.2.1",
+    "react-fontpicker-ts-lite": "^0.3.0",
     "react-select": "^5.7.3",
     "react-speech-recognition": "^3.10.0",
     "regenerator-runtime": "^0.13.11",
@@ -69,7 +69,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
     "autoprefixer": "^10.4.14",
-    "eslint": "^8.41.0",
+    "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",

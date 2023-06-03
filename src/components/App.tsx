@@ -214,9 +214,10 @@ export function App() {
           installation instructions.
         </p>
         <div className="mt-8 space-y-6">
-          <form>
+          <form id="apiKeyForm" name="apiKeyForm">
             <div>
               {/* Better user experience storing API key as "password" in browser's password manager if we include a dummy username */}
+              <label hidden={true} htmlFor="dummyUser" />
               <input
                 type="username"
                 name="dummyUser"
@@ -227,7 +228,7 @@ export function App() {
               />
             </div>
             <div>
-              <Label htmlFor="password">API Key</Label>
+              <Label htmlFor="apiKey">API Key</Label>
               <Input
                 type="password"
                 name="apiKey"
@@ -259,7 +260,7 @@ export function App() {
             />
           </div>
           <div>
-            <Label htmlFor="recogFontColor">Transcript Border Color</Label>
+            <Label htmlFor="recogFontStrokeColor">Transcript Border Color</Label>
             <ColorInput
               name="recogFontStrokeColor"
               id="recogFontStrokeColor"
@@ -277,7 +278,7 @@ export function App() {
             />
           </div>
           <div>
-            <Label htmlFor="transLang">Translation Font Color</Label>
+            <Label htmlFor="transFontColor">Translation Font Color</Label>
             <ColorInput
               type="color"
               name="transFontColor"
@@ -287,7 +288,7 @@ export function App() {
             />
           </div>
           <div>
-            <Label htmlFor="transFont">Translation Border Color</Label>
+            <Label htmlFor="transFontStrokeColor">Translation Border Color</Label>
             <ColorInput
               type="color"
               name="transFontStrokeColor"
@@ -300,28 +301,28 @@ export function App() {
 
         <div className="mt-8 grid lg:grid-cols-3 gap-4">
           <div>
-            <Label>Transcript Size</Label>
-            <Range min={8} max={64} step={2} defaultValue={recogFontSize} onChange={onChangeRecogFontSize} />
+            <Label htmlFor="recogFontSize">Transcript Size</Label>
+            <Range name="recogFontSize" id="recogFontSize" min={8} max={64} step={2} defaultValue={recogFontSize} onChange={onChangeRecogFontSize} />
           </div>
           <div>
-            <Label>Transcript Weight</Label>
-            <Range min={100} max={900} step={100} defaultValue={recogFontWeight} onChange={onChangeRecogFontWeight} />
+            <Label htmlFor="recogFontWeight">Transcript Weight</Label>
+            <Range name="recogFontWeight" id="recogFontWeight" min={100} max={900} step={100} defaultValue={recogFontWeight} onChange={onChangeRecogFontWeight} />
           </div>
           <div>
-            <Label>Transcript Border</Label>
-            <Range min={0} max={32} step={1} defaultValue={recogFontStrokeWidth} onChange={onChangeRecogFontStrokeWidth} />
+            <Label htmlFor="recogFontStrokeWidth">Transcript Border</Label>
+            <Range name="recogFontStrokeWidth" id="recogFontStrokeWidth" min={0} max={32} step={1} defaultValue={recogFontStrokeWidth} onChange={onChangeRecogFontStrokeWidth} />
           </div>
           <div>
-            <Label>Translation Size</Label>
-            <Range min={8} max={64} step={2} defaultValue={transFontSize} onChange={onChangeTransFontSize}/>
+            <Label htmlFor="transFontSize">Translation Size</Label>
+            <Range name="transFontSize" id="transFontSize" min={8} max={64} step={2} defaultValue={transFontSize} onChange={onChangeTransFontSize}/>
           </div>
           <div>
-            <Label>Translation Weight</Label>
-            <Range min={100} max={900} step={100} defaultValue={transFontWeight} onChange={onChangeTransFontWeight} />
+            <Label htmlFor="transFontWeight">Translation Weight</Label>
+            <Range name="transFontWeight" id="transFontWeight" min={100} max={900} step={100} defaultValue={transFontWeight} onChange={onChangeTransFontWeight} />
           </div>
           <div>
-            <Label>Translation Border</Label>
-            <Range min={0} max={32} step={1} defaultValue={transFontStrokeWidth} onChange={onChangeTransFontStrokeWidth} />
+            <Label htmlFor="transFontStrokeWidth">Translation Border</Label>
+            <Range name="transFontStrokeWidth" id="transFontStrokeWidth" min={0} max={32} step={1} defaultValue={transFontStrokeWidth} onChange={onChangeTransFontStrokeWidth} />
           </div>
         </div>
 
@@ -349,12 +350,15 @@ export function App() {
             </span>
           </div>
           <div>
-            <Label htmlFor="recogFont">Transcript Font</Label>
-            <FontPicker
-              //autoLoad
-              defaultValue={recogFont}
-              value={(font: string) => onChangeRecogFont(font)}
-            />
+            <Label htmlFor="recogFont">
+              Transcript Font
+              <FontPicker
+                //autoLoad
+                inputId="recogFont"
+                defaultValue={recogFont}
+                value={(font: string) => onChangeRecogFont(font)}
+              />
+            </Label>
           </div>
           <div>
             <Label htmlFor="transLang">
@@ -379,12 +383,15 @@ export function App() {
             </span>
           </div>
           <div>
-            <Label htmlFor="transFont">Translation Font</Label>
-            <FontPicker
-              //autoLoad
-              defaultValue={transFont}
-              value={(font: string) => onChangeTransFont(font)}
-            />
+            <Label htmlFor="transFont">
+              Translation Font
+              <FontPicker
+                //autoLoad
+                inputId="transFont"
+                defaultValue={transFont}
+                value={(font: string) => onChangeTransFont(font)}
+              />
+            </Label>
           </div>
         </div>
         <div className="mt-8 grid lg:grid-cols-2 gap-4">

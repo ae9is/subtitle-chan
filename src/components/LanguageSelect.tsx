@@ -5,6 +5,7 @@ export type LanguageType = 'transcribe' | 'translate'
 export interface LanguageSelectProps {
   defaultVal?: string // Allows passing short language code instead of full react-select OptionType
   languageType?: LanguageType
+  id?: string
 }
 
 // Supported translate languages
@@ -49,6 +50,7 @@ export function LanguageSelect<
 >({
   languageType = 'translate',
   defaultVal = 'en',
+  id,
   ...props
 }: Props<OptionType, IsMulti, GroupType> & LanguageSelectProps) {
   // react-select: https://github.com/JedWatson/react-select#readme
@@ -74,9 +76,10 @@ export function LanguageSelect<
   return (
     <>
       <Select
+        inputId={id}
+        {...props}
         className="w-64"
         options={languageOptions}
-        onChange={props?.onChange}
         defaultValue={defaultValueOptionType}
         isSearchable
         components={{
