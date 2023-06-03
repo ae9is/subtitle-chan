@@ -26,3 +26,10 @@
   }
 }
 */
+
+/* ref: https://tailwindcss.com/docs/preflight */
+@layer base {
+  a {
+    @apply hover:underline text-blue-600 hover:text-blue-800 visited:text-purple-600
+  }
+}
