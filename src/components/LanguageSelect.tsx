@@ -1,5 +1,4 @@
 import Select, { GroupBase, Props } from 'react-select'
-import logger from '../lib/logger'
 
 export type LanguageType = 'transcribe' | 'translate'
 
@@ -63,7 +62,6 @@ export function LanguageSelect<
     key: defaultVal,
     label: defaultLabel,
   }
-  logger.log('LanguageSelect: defaultVal: ' + defaultVal + ', label: ' + defaultLabel)
   // eslint-disable-next-line
   // @ts-ignore
   const languageOptions: OptionType[] = Object.entries(languages).map(([key, value]) => {
