@@ -301,27 +301,27 @@ export function App() {
 
         <div className="mt-8 grid lg:grid-cols-3 gap-4">
           <div>
-            <Label htmlFor="recogFontSize">Transcript Size</Label>
+            <Label htmlFor="recogFontSize" value={recogFontSize + 'px'}>Transcript Size</Label>
             <Range name="recogFontSize" id="recogFontSize" min={8} max={64} step={2} defaultValue={recogFontSize} onChange={onChangeRecogFontSize} />
           </div>
           <div>
-            <Label htmlFor="recogFontWeight">Transcript Weight</Label>
+            <Label htmlFor="recogFontWeight" value={recogFontWeight + ''}>Transcript Weight</Label>
             <Range name="recogFontWeight" id="recogFontWeight" min={100} max={900} step={100} defaultValue={recogFontWeight} onChange={onChangeRecogFontWeight} />
           </div>
           <div>
-            <Label htmlFor="recogFontStrokeWidth">Transcript Border</Label>
+            <Label htmlFor="recogFontStrokeWidth" value={recogFontStrokeWidth + 'px'}>Transcript Border</Label>
             <Range name="recogFontStrokeWidth" id="recogFontStrokeWidth" min={0} max={32} step={1} defaultValue={recogFontStrokeWidth} onChange={onChangeRecogFontStrokeWidth} />
           </div>
           <div>
-            <Label htmlFor="transFontSize">Translation Size</Label>
+            <Label htmlFor="transFontSize" value={transFontSize + 'px'}>Translation Size</Label>
             <Range name="transFontSize" id="transFontSize" min={8} max={64} step={2} defaultValue={transFontSize} onChange={onChangeTransFontSize}/>
           </div>
           <div>
-            <Label htmlFor="transFontWeight">Translation Weight</Label>
+            <Label htmlFor="transFontWeight" value={transFontWeight + ''}>Translation Weight</Label>
             <Range name="transFontWeight" id="transFontWeight" min={100} max={900} step={100} defaultValue={transFontWeight} onChange={onChangeTransFontWeight} />
           </div>
           <div>
-            <Label htmlFor="transFontStrokeWidth">Translation Border</Label>
+            <Label htmlFor="transFontStrokeWidth" value={transFontStrokeWidth + 'px'}>Translation Border</Label>
             <Range name="transFontStrokeWidth" id="transFontStrokeWidth" min={0} max={32} step={1} defaultValue={transFontStrokeWidth} onChange={onChangeTransFontStrokeWidth} />
           </div>
         </div>
