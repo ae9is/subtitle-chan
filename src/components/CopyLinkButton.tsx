@@ -1,9 +1,15 @@
 import { toUrlParams } from '../lib/config'
 import { CopyIcon } from './CopyIcon'
 
+export interface CopyLinkButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+  config: Record<string, string>
+}
+
 // Construct a link that will open up the app with all settings pre-populated,
 //  and copy it to the clipboard so the user can open and/or bookmark it.
-export function CopyLinkButton(config: any = {}) {
+export function CopyLinkButton(props: CopyLinkButtonProps) {
+  const { config, ...rest } = props
+
   const handleClick = () => {
     const base = window.location.href.split('?')[0]
     const url = base + toUrlParams(config)
@@ -14,6 +20,7 @@ export function CopyLinkButton(config: any = {}) {
     <button
       onClick={handleClick}
       className="py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 active:bg-green-700 disabled:opacity-50 inline-flex items-center"
+      {...rest}
     >
       <span className="inline-flex gap-x-2">
         <CopyIcon />
