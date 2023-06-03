@@ -64,6 +64,9 @@ export function App() {
   const [bgColor, setBgColor] = useState<string>(
     getParam('bgColor') || config.bgColor || defaults.bgColor
   )
+  const [showFontTest, setShowFontTest] = useState<boolean>(
+    getParam('showFontTest') || config.showFontTest || defaults.showFontTest
+  )
 
   const onChangeApiKey = (e: any) => {
     const newApiKey = e?.target?.value ?? ''
@@ -175,6 +178,12 @@ export function App() {
     saveConfig({ ...config, transFontStrokeWidth: newNum })
   }
 
+  const onChangeShowFontTest = () => {
+    const newValue = !showFontTest
+    setShowFontTest(newValue)
+    saveConfig({ ...config, showFontTest: newValue })
+  }
+
   return (
     <>
       <Subtitler
@@ -195,6 +204,7 @@ export function App() {
         transFontSize={transFontSize}
         transFontWeight={transFontWeight}
         transFontStrokeWidth={transFontStrokeWidth}
+        showFontTest={showFontTest}
       />
       <div className="p-8 border border-gray-200">
         <h1 className="font-medium text-3xl">subtitle-chan</h1>
@@ -377,8 +387,21 @@ export function App() {
             />
           </div>
         </div>
-        <div className="mt-8 space-y-6">
-          <CopyLinkButton config={config} />
+        <div className="mt-8 grid lg:grid-cols-2 gap-4">
+          <div>
+            <CopyLinkButton config={config} />
+          </div>
+          <span className="inline-flex gap-x-4 h-4 items-baseline">
+            <input
+              id="showFontTest"
+              name="showFontTest"
+              type="checkbox"
+              checked={showFontTest}
+              onChange={onChangeShowFontTest}
+              className="disabled:opacity-50"
+            />
+            <Label htmlFor="showFontTest">Show font test?</Label>
+          </span>
         </div>
       </div>
     </>

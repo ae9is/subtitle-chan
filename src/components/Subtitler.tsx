@@ -21,12 +21,14 @@ export interface SubtitlerProps {
   transFontSize: number
   transFontWeight: number
   transFontStrokeWidth: number
+  showFontTest?: boolean
 }
 
 export function Subtitler(props: SubtitlerProps) {
   const { apiKey, phraseSepTime, recogLang, transLang, recogFont, transFont,
     bgColor, recogFontColor, transFontColor, recogFontStrokeColor, transFontStrokeColor,
-    recogFontSize, recogFontWeight, recogFontStrokeWidth, transFontSize, transFontWeight, transFontStrokeWidth,
+    recogFontSize, recogFontWeight, recogFontStrokeWidth, transFontSize, transFontWeight, 
+    transFontStrokeWidth, showFontTest,
   } = props
   const [enabled, setEnabled] = useState(false)
 
@@ -90,15 +92,16 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
   // TODO fade edges of text area text
 
   return (
-    <>
-      <Subtitle fontFamily={recogFont} value={testText} bottomBorder
-        bgColor={bgColor}
-        fontColor={recogFontColor}
-        fontStrokeColor={recogFontStrokeColor}
-        fontSize={recogFontSize}
-        fontWeight={recogFontWeight}
-        fontStrokeWidth={recogFontStrokeWidth}
-      />
+    <>{showFontTest && (
+        <Subtitle fontFamily={recogFont} value={testText} bottomBorder
+          bgColor={bgColor}
+          fontColor={recogFontColor}
+          fontStrokeColor={recogFontStrokeColor}
+          fontSize={recogFontSize}
+          fontWeight={recogFontWeight}
+          fontStrokeWidth={recogFontStrokeWidth}
+        />
+      )}
       <Subtitle fontFamily={recogFont} value={transcript}
         bgColor={bgColor}
         fontColor={recogFontColor}

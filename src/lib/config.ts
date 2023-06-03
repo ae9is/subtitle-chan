@@ -19,6 +19,7 @@ export interface Config {
   deleteDelay?: number
   textAlignH?: string
   textAlignV?: string
+  showFontTest?: boolean
 }
 
 export const defaults = {
@@ -41,6 +42,7 @@ export const defaults = {
   deleteDelay: 30000,
   textAlignH: 'left',
   textAlignV: 'top',
+  showFontTest: false,
 }
 
 export const ConfigKeys = [
@@ -64,6 +66,7 @@ export const ConfigKeys = [
   'deleteDelay',
   'textAlignH',
   'textAlignV',
+  'showFontTest',
 ]
 
 export function saveConfig(config: Config) {
