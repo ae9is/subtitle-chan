@@ -4,7 +4,6 @@ import 'react-fontpicker-ts-lite/dist/index.css'
 import './FontPicker.css' // Custom styling to match react-select somewhat
 import { defaults, getConfig, saveConfig } from '../lib/config'
 import { getParam } from '../lib/url'
-import logger from '../lib/logger'
 import { Subtitler } from './Subtitler'
 import { Input } from './Input'
 import { Label } from './Label'
@@ -32,6 +31,39 @@ export function App() {
   const [transFont, setTransFont] = useState<string>(
     getParam('transFont') || config.transFont || defaults.transFont
   )
+  const [recogFontSize, setRecogFontSize] = useState<number>(
+    Number(getParam('recogFontSize')) || config.recogFontSize || defaults.recogFontSize
+  )
+  const [recogFontWeight, setRecogFontWeight] = useState<number>(
+    Number(getParam('recogFontWeight')) || config.recogFontWeight || defaults.recogFontWeight
+  )
+  const [recogFontStrokeWidth, setRecogFontStrokeWidth] = useState<number>(
+    Number(getParam('recogFontStrokeWidth')) || config.recogFontStrokeWidth || defaults.recogFontStrokeWidth
+  )
+  const [transFontSize, setTransFontSize] = useState<number>(
+    Number(getParam('transFontSize')) || config.transFontSize || defaults.transFontSize
+  )
+  const [transFontWeight, setTransFontWeight] = useState<number>(
+    Number(getParam('transFontWeight')) || config.transFontWeight || defaults.transFontWeight
+  )
+  const [transFontStrokeWidth, setTransFontStrokeWidth] = useState<number>(
+    Number(getParam('transFontStrokeWidth')) || config.transFontStrokeWidth || defaults.transFontStrokeWidth
+  )
+  const [recogFontColor, setRecogFontColor] = useState<string>(
+    getParam('recogFontColor') || config.recogFontColor || defaults.recogFontColor
+  )
+  const [transFontColor, setTransFontColor] = useState<string>(
+    getParam('transFontColor') || config.transFontColor || defaults.transFontColor
+  )
+  const [recogFontStrokeColor, setRecogFontStrokeColor] = useState<string>(
+    getParam('recogFontStrokeColor') || config.recogFontStrokeColor || defaults.recogFontStrokeColor
+  )
+  const [transFontStrokeColor, setTransFontStrokeColor] = useState<string>(
+    getParam('transFontStrokeColor') || config.transFontStrokeColor || defaults.transFontStrokeColor
+  )
+  const [bgColor, setBgColor] = useState<string>(
+    getParam('bgColor') || config.bgColor || defaults.bgColor
+  )
 
   const onChangeApiKey = (e: any) => {
     const newApiKey = e?.target?.value ?? ''
@@ -41,23 +73,106 @@ export function App() {
 
   const onChangePhraseSepTime = (e: any) => {
     const newValue = e?.target?.value
-    let newPhraseSepTime = Number(newValue) || defaults.phraseSepTime
-    if (newPhraseSepTime < minPhraseSepTime) {
-      newPhraseSepTime = minPhraseSepTime
+    let newNum = Number(newValue) || phraseSepTime
+    if (newNum < minPhraseSepTime) {
+      newNum = minPhraseSepTime
     }
-    logger.log(newPhraseSepTime)
-    setPhraseSepTime(newPhraseSepTime)
-    saveConfig({ ...config, phraseSepTime: newPhraseSepTime })
+    setPhraseSepTime(newNum)
+    saveConfig({ ...config, phraseSepTime: newNum })
   }
 
   const onChangeRecogLang = (e: any) => {
-    const newValue = e?.target?.value || defaults.recogLang
+    const newValue = e?.target?.value || recogLang
     setRecogLang(newValue)
+    saveConfig({ ...config, recogLang: newValue })
   }
 
   const onChangeTransLang = (e: any) => {
-    const newValue = e?.target?.value || defaults.transLang
+    const newValue = e?.target?.value || transLang
     setTransLang(newValue)
+    saveConfig({ ...config, transLang: newValue })
+  }
+
+  const onChangeRecogFont = (font: string) => {
+    setRecogFont(font)
+    saveConfig({ ...config, recogFont: font })
+  }
+
+  const onChangeTransFont = (font: string) => {
+    setTransFont(font)
+    saveConfig({ ...config, transFont: font })
+  }
+
+  const onChangeRecogFontColor = (e: any) => {
+    const newValue = e?.target?.value || recogFontColor
+    setRecogFontColor(newValue)
+    saveConfig({ ...config, recogFontColor: newValue })
+  }
+
+  const onChangeTransFontColor = (e: any) => {
+    const newValue = e?.target?.value || transFontColor
+    setTransFontColor(newValue)
+    saveConfig({ ...config, transFontColor: newValue })
+  }
+
+  const onChangeRecogFontStrokeColor = (e: any) => {
+    const newValue = e?.target?.value || recogFontStrokeColor
+    setRecogFontStrokeColor(newValue)
+    saveConfig({ ...config, recogFontStrokeColor: newValue })
+  }
+
+  const onChangeTransFontStrokeColor = (e: any) => {
+    const newValue = e?.target?.value || transFontStrokeColor
+    setTransFontStrokeColor(newValue)
+    saveConfig({ ...config, transFontStrokeColor: newValue })
+  }
+
+  const onChangeBgColor = (e: any) => {
+    const newValue = e?.target?.value || bgColor
+    setBgColor(newValue)
+    saveConfig({ ...config, bgColor: newValue })
+  }
+
+  const onChangeRecogFontSize = (e: any) => {
+    const newValue = e?.target?.value
+    const newNum = Number(newValue) || recogFontSize
+    setRecogFontSize(newNum)
+    saveConfig({ ...config, recogFontSize: newNum })
+  }
+
+  const onChangeRecogFontWeight = (e: any) => {
+    const newValue = e?.target?.value
+    const newNum = Number(newValue) || recogFontWeight
+    setRecogFontWeight(newNum)
+    saveConfig({ ...config, recogFontWeight: newNum })
+  }
+
+  const onChangeRecogFontStrokeWidth = (e: any) => {
+    const newValue = e?.target?.value
+    const newNum = Number(newValue) ?? recogFontStrokeWidth
+    setRecogFontStrokeWidth(newNum)
+    saveConfig({ ...config, recogFontStrokeWidth: newNum })
+  }
+
+  const onChangeTransFontSize = (e: any) => {
+    const newValue = e?.target?.value
+    const newNum = Number(newValue) || transFontSize
+    setTransFontSize(newNum)
+    saveConfig({ ...config, transFontSize: newNum })
+  }
+
+  const onChangeTransFontWeight = (e: any) => {
+    const newValue = e?.target?.value
+    const newNum = Number(newValue) || transFontWeight
+    setTransFontWeight(newNum)
+    saveConfig({ ...config, transFontWeight: newNum })
+  }
+
+  const onChangeTransFontStrokeWidth = (e: any) => {
+    const newValue = e?.target?.value
+    const newNum = Number(newValue) ?? transFontStrokeWidth
+    setTransFontStrokeWidth(newNum)
+    saveConfig({ ...config, transFontStrokeWidth: newNum })
   }
 
   return (
@@ -69,11 +184,22 @@ export function App() {
         transLang={transLang}
         recogFont={recogFont}
         transFont={transFont}
+        bgColor={bgColor}
+        recogFontColor={recogFontColor}
+        transFontColor={transFontColor}
+        recogFontStrokeColor={recogFontStrokeColor}
+        transFontStrokeColor={transFontStrokeColor}
+        recogFontSize={recogFontSize}
+        recogFontWeight={recogFontWeight}
+        recogFontStrokeWidth={recogFontStrokeWidth}
+        transFontSize={transFontSize}
+        transFontWeight={transFontWeight}
+        transFontStrokeWidth={transFontStrokeWidth}
       />
       <div className="p-8 border border-gray-200">
         <h1 className="font-medium text-3xl">subtitle-chan</h1>
-        <p className="text-gray-600 mt-6">This is a live demo showing how to use subtitle-chan.</p>
-        <p className="text-gray-600 mt-6">
+        <p className="mt-4">This is a live demo showing how to use subtitle-chan.</p>
+        <p className="mt-4">
           See <a href="https://github.com/ae9is/subtitle-chan#readme">github repo</a> for
           installation instructions.
         </p>
@@ -112,13 +238,14 @@ export function App() {
           </div>
         </div>
 
-        <div className="mt-8 grid lg:grid-cols-2 gap-4">
+        <div className="mt-8 grid lg:grid-cols-3 gap-4">
           <div>
             <Label htmlFor="recogFontColor">Transcript Font Color</Label>
             <ColorInput
               name="recogFontColor"
               id="recogFontColor"
-              defaultValue={defaults.recogFontColor}
+              defaultValue={recogFontColor}
+              onChange={onChangeRecogFontColor}
             />
           </div>
           <div>
@@ -126,7 +253,17 @@ export function App() {
             <ColorInput
               name="recogFontStrokeColor"
               id="recogFontStrokeColor"
-              defaultValue={defaults.recogFontStrokeColor}
+              defaultValue={recogFontStrokeColor}
+              onChange={onChangeRecogFontStrokeColor}
+            />
+          </div>
+          <div>
+            <Label htmlFor="bgColor">Background Color</Label>
+            <ColorInput
+              name="bgColor"
+              id="bgColor"
+              defaultValue={bgColor}
+              onChange={onChangeBgColor}
             />
           </div>
           <div>
@@ -135,7 +272,8 @@ export function App() {
               type="color"
               name="transFontColor"
               id="transFontColor"
-              defaultValue={defaults.transFontColor}
+              defaultValue={transFontColor}
+              onChange={onChangeTransFontColor}
             />
           </div>
           <div>
@@ -144,7 +282,8 @@ export function App() {
               type="color"
               name="transFontStrokeColor"
               id="transFontStrokeColor"
-              defaultValue={defaults.transFontStrokeColor}
+              defaultValue={transFontStrokeColor}
+              onChange={onChangeTransFontStrokeColor}
             />
           </div>
         </div>
@@ -152,27 +291,27 @@ export function App() {
         <div className="mt-8 grid lg:grid-cols-3 gap-4">
           <div>
             <Label>Transcript Size</Label>
-            <Range min={8} max={64} step={2} defaultValue={defaults.recogFontSize} />
+            <Range min={8} max={64} step={2} defaultValue={recogFontSize} onChange={onChangeRecogFontSize} />
           </div>
           <div>
             <Label>Transcript Weight</Label>
-            <Range min={100} max={900} step={100} defaultValue={defaults.recogFontWeight} />
+            <Range min={100} max={900} step={100} defaultValue={recogFontWeight} onChange={onChangeRecogFontWeight} />
           </div>
           <div>
             <Label>Transcript Border</Label>
-            <Range min={0} max={32} step={1} defaultValue={defaults.recogFontStrokeWidth} />
+            <Range min={0} max={32} step={1} defaultValue={recogFontStrokeWidth} onChange={onChangeRecogFontStrokeWidth} />
           </div>
           <div>
             <Label>Translation Size</Label>
-            <Range min={8} max={64} step={2} defaultValue={defaults.transFontSize} />
+            <Range min={8} max={64} step={2} defaultValue={transFontSize} onChange={onChangeTransFontSize}/>
           </div>
           <div>
             <Label>Translation Weight</Label>
-            <Range min={100} max={900} step={100} defaultValue={defaults.transFontWeight} />
+            <Range min={100} max={900} step={100} defaultValue={transFontWeight} onChange={onChangeTransFontWeight} />
           </div>
           <div>
             <Label>Translation Border</Label>
-            <Range min={0} max={32} step={1} defaultValue={defaults.transFontStrokeWidth} />
+            <Range min={0} max={32} step={1} defaultValue={transFontStrokeWidth} onChange={onChangeTransFontStrokeWidth} />
           </div>
         </div>
 
@@ -194,7 +333,7 @@ export function App() {
               <LanguageSelect
                 name="recogLang"
                 id="recogLang"
-                defaultVal={defaults.recogLang}
+                defaultVal={recogLang}
                 onChange={onChangeRecogLang}
               />
             </span>
@@ -203,8 +342,8 @@ export function App() {
             <Label htmlFor="recogFont">Transcript Font</Label>
             <FontPicker
               //autoLoad
-              defaultValue={defaults.recogFont}
-              value={(font: string) => setRecogFont(font)}
+              defaultValue={recogFont}
+              value={(font: string) => onChangeRecogFont(font)}
             />
           </div>
           <div>
@@ -224,7 +363,7 @@ export function App() {
               <LanguageSelect
                 name="transLang"
                 id="transLang"
-                defaultVal={defaults.transLang}
+                defaultVal={transLang}
                 onChange={onChangeTransLang}
               />
             </span>
@@ -233,8 +372,8 @@ export function App() {
             <Label htmlFor="transFont">Translation Font</Label>
             <FontPicker
               //autoLoad
-              defaultValue={defaults.transFont}
-              value={(font: string) => setTransFont(font)}
+              defaultValue={transFont}
+              value={(font: string) => onChangeTransFont(font)}
             />
           </div>
         </div>

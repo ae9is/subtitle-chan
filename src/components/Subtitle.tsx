@@ -3,9 +3,13 @@ import cx from 'classnames'
 export interface SubtitleProps {
   value?: string
   bottomBorder?: boolean
-  color?: string
-  textStroke?: string
+  fontColor?: string
+  fontStrokeColor?: string
   fontFamily?: string
+  bgColor?: string
+  fontSize?: number
+  fontWeight?: number
+  fontStrokeWidth?: number
 }
 
 export function Subtitle(props: SubtitleProps) {
@@ -13,9 +17,15 @@ export function Subtitle(props: SubtitleProps) {
     fontFamily,
     value = '',
     bottomBorder = false,
-    color = 'white',
-    textStroke = '2px black',
+    fontColor,
+    fontStrokeColor,
+    bgColor,
+    fontSize,
+    fontWeight,
+    fontStrokeWidth,
   } = props
+
+  const textStroke = (fontStrokeWidth ?? '2') + 'px ' + (fontStrokeColor || 'black')
 
   // As alternative to -webkit-text-stroke, can also create text outline via drop shadow:
   //  drop-shadow-[0_2px_2px_rgba(0,0,0,1.0)]
@@ -26,15 +36,21 @@ export function Subtitle(props: SubtitleProps) {
       <div
         className={cx(
           { 'border-b': bottomBorder },
-          'h-40 p-8 border-gray-200 bg-pure-green overflow-hidden'
+          { 'bg-pure-green': !bgColor },
+          'h-40 p-8 border-gray-200 overflow-hidden'
         )}
+        style={{
+          backgroundColor: bgColor,
+        }}
       >
         <textarea
           className="text-4xl font-bold scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block"
           style={{
-            fontFamily: fontFamily,
-            color: color,
+            fontFamily,
+            color: fontColor,
             WebkitTextStroke: textStroke,
+            fontSize,
+            fontWeight,
           }}
           value={value}
           readOnly
