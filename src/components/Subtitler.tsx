@@ -83,9 +83,28 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
           <span className="py-2 px-4">
             <MicIcon stroke={listening ? 'red' : 'black'} fill={listening ? 'red' : 'none'} />
           </span>
-          {!enabled && <button onClick={handleStart} className="w-32 py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 active:bg-green-700 disabled:opacity-50">Start</button>}
-          {enabled && <button onClick={handleStop} className="w-32 py-2 px-4 bg-red-500 text-white rounded hover:bg-red-600 active:bg-red-700 disabled:opacity-50">Stop</button>}
-          <button onClick={handleReset} className="py-2 px-4 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50">Reset</button>
+          {!enabled && (
+            <button
+              onClick={handleStart}
+              className="w-32 py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 active:bg-green-700 disabled:opacity-50"
+            >
+              Start
+            </button>
+          )}
+          {enabled && (
+            <button
+              onClick={handleStop}
+              className="w-32 py-2 px-4 bg-red-500 text-white rounded hover:bg-red-600 active:bg-red-700 disabled:opacity-50"
+            >
+              Stop
+            </button>
+          )}
+          <button
+            onClick={handleReset}
+            className="py-2 px-4 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50"
+          >
+            Reset
+          </button>
         </div>
       </div>
     </>

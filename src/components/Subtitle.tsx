@@ -8,12 +8,7 @@ export interface SubtitleProps {
 }
 
 export function Subtitle(props: SubtitleProps) {
-  const {
-    value = '',
-    bottomBorder = false,
-    color = 'white',
-    textStroke = '2px black',
-  } = props
+  const { value = '', bottomBorder = false, color = 'white', textStroke = '2px black' } = props
 
   // As alternative to -webkit-text-stroke, can also create text outline via drop shadow:
   //  drop-shadow-[0_2px_2px_rgba(0,0,0,1.0)]
@@ -21,10 +16,12 @@ export function Subtitle(props: SubtitleProps) {
 
   return (
     <>
-      <div className={cx(
-          { 'border-b': bottomBorder, },
-          "h-40 p-8 border-gray-200 bg-pure-green overflow-hidden"
-      )}>
+      <div
+        className={cx(
+          { 'border-b': bottomBorder },
+          'h-40 p-8 border-gray-200 bg-pure-green overflow-hidden'
+        )}
+      >
         <textarea
           className="text-4xl font-bold scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block"
           style={{

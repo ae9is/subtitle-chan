@@ -45,7 +45,7 @@ export default function FontSelect(props: FontSelectProps) {
         <option value="Sawarabi Gothic">さわらびゴシック</option>
         <option value="Nico Moji">ニコモジ</option>
       </select>
-      　 Font (custom):
+      Font (custom):
       <input
         type="text"
         name={customFontName}

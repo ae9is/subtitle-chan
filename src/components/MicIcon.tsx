@@ -1,4 +1,4 @@
-import { Icon, IconProps } from "./Icon"
+import { Icon, IconProps } from './Icon'
 
 export function MicIcon(props: IconProps) {
   const outlined = (
@@ -17,8 +17,5 @@ export function MicIcon(props: IconProps) {
     </>
   )
 
-  return (
-    <Icon outlined={outlined} filled={filled} {...props} />
-  )
+  return <Icon outlined={outlined} filled={filled} {...props} />
 }
-

@@ -85,8 +85,8 @@ export function getConfig() {
 
 export const toUrlParams = (config: Config) => {
   const pairs: [string, string][] = Object.entries(config).map(([key, value]) => {
-    return [ key, JSON.stringify(value) ]
+    return [key, JSON.stringify(value)]
   })
   const params = new URLSearchParams(pairs)
-  return ('?' + params.toString()) ?? ''
+  return '?' + params.toString() ?? ''
 }

@@ -1,5 +1,6 @@
-
-export function ColorInput(props: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>) {
+export function ColorInput(
+  props: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+) {
   return (
     <input
       type="color"
@@ -8,4 +9,3 @@ export function ColorInput(props: React.DetailedHTMLProps<React.InputHTMLAttribu
     />
   )
 }
-          

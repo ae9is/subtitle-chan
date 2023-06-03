@@ -14,9 +14,15 @@ export function App() {
   const config = getConfig()
   const [apiKey, setApiKey] = useState(getParam('apiKey') || config.apiKey)
   const minPhraseSepTime = 100
-  const [phraseSepTime, setPhraseSepTime] = useState<number>(getParam('phraseSepTime') || config.phraseSepTime || defaults.phraseSepTime)
-  const [recogLang, setRecogLang] = useState<string>(getParam('recogLang') || config.recogLang || defaults.recogLang)
-  const [transLang, setTransLang] = useState<string>(getParam('transLang') || config.transLang || defaults.transLang)
+  const [phraseSepTime, setPhraseSepTime] = useState<number>(
+    getParam('phraseSepTime') || config.phraseSepTime || defaults.phraseSepTime
+  )
+  const [recogLang, setRecogLang] = useState<string>(
+    getParam('recogLang') || config.recogLang || defaults.recogLang
+  )
+  const [transLang, setTransLang] = useState<string>(
+    getParam('transLang') || config.transLang || defaults.transLang
+  )
 
   const onChangeApiKey = (e: any) => {
     const newApiKey = e?.target?.value ?? ''
@@ -47,12 +53,15 @@ export function App() {
 
   return (
     <>
-      <Subtitler apiKey={apiKey} phraseSepTime={phraseSepTime} recogLang={recogLang} transLang={transLang} />
+      <Subtitler
+        apiKey={apiKey}
+        phraseSepTime={phraseSepTime}
+        recogLang={recogLang}
+        transLang={transLang}
+      />
       <div className="p-8 border border-gray-200">
         <h1 className="font-medium text-3xl">subtitle-chan</h1>
-        <p className="text-gray-600 mt-6">
-          This is a live demo showing how to use subtitle-chan.
-        </p>
+        <p className="text-gray-600 mt-6">This is a live demo showing how to use subtitle-chan.</p>
         <p className="text-gray-600 mt-6">
           See <a href="https://github.com/ae9is/subtitle-chan#readme">github repo</a> for
           installation instructions.
@@ -95,19 +104,37 @@ export function App() {
         <div className="mt-8 grid lg:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="recogFontColor">Transcript Font Color</Label>
-            <ColorInput name="recogFontColor" id="recogFontColor" defaultValue={defaults.recogFontColor} />
+            <ColorInput
+              name="recogFontColor"
+              id="recogFontColor"
+              defaultValue={defaults.recogFontColor}
+            />
           </div>
           <div>
             <Label htmlFor="recogFontColor">Transcript Border Color</Label>
-            <ColorInput name="recogFontStrokeColor" id="recogFontStrokeColor" defaultValue={defaults.recogFontStrokeColor} />
+            <ColorInput
+              name="recogFontStrokeColor"
+              id="recogFontStrokeColor"
+              defaultValue={defaults.recogFontStrokeColor}
+            />
           </div>
           <div>
             <Label htmlFor="transLang">Translation Font Color</Label>
-            <ColorInput type="color" name="transFontColor" id="transFontColor" defaultValue={defaults.transFontColor} />
+            <ColorInput
+              type="color"
+              name="transFontColor"
+              id="transFontColor"
+              defaultValue={defaults.transFontColor}
+            />
           </div>
           <div>
             <Label htmlFor="transFont">Translation Border Color</Label>
-            <ColorInput type="color" name="transFontStrokeColor" id="transFontStrokeColor" defaultValue={defaults.transFontStrokeColor} />
+            <ColorInput
+              type="color"
+              name="transFontStrokeColor"
+              id="transFontStrokeColor"
+              defaultValue={defaults.transFontStrokeColor}
+            />
           </div>
         </div>
 
@@ -143,13 +170,19 @@ export function App() {
             <Label htmlFor="recogLang">
               Transcript Speech &nbsp;
               <sup>
-                <a href="https://stackoverflow.com/questions/14257598" target="_blank">
+                <a
+                  href="https://stackoverflow.com/questions/14257598"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   (supported languages)
                 </a>
               </sup>
             </Label>
             <span className="inline-flex gap-x-4">
-              <LanguageSelect name="recogLang" id="recogLang"
+              <LanguageSelect
+                name="recogLang"
+                id="recogLang"
                 defaultVal={defaults.recogLang}
                 onChange={onChangeRecogLang}
               />
@@ -163,21 +196,25 @@ export function App() {
           </div>
           <div>
             <Label htmlFor="recogFont">Transcript Font</Label>
-            <Input name="recogFont" id="recogFont"
-              defaultValue={defaults.recogFont}
-            />
+            <Input name="recogFont" id="recogFont" defaultValue={defaults.recogFont} />
           </div>
           <div>
             <Label htmlFor="transLang">
               Translation &nbsp;
               <sup>
-                <a href="https://cloud.google.com/translate/docs/languages" target="_blank">
+                <a
+                  href="https://cloud.google.com/translate/docs/languages"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   (supported languages)
                 </a>
               </sup>
             </Label>
             <span className="inline-flex gap-x-4">
-              <LanguageSelect name="transLang" id="transLang"
+              <LanguageSelect
+                name="transLang"
+                id="transLang"
                 defaultVal={defaults.transLang}
                 onChange={onChangeTransLang}
               />
@@ -191,9 +228,7 @@ export function App() {
           </div>
           <div>
             <Label htmlFor="transFont">Translation Font</Label>
-            <Input name="transFont" id="transFont"
-              defaultValue={defaults.transFont}
-            />
+            <Input name="transFont" id="transFont" defaultValue={defaults.transFont} />
           </div>
         </div>
         <div className="mt-8 space-y-6">
