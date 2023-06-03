@@ -1,55 +1,69 @@
 export interface Config {
   apiKey?: string
-  textAlign?: string
-  v_align?: string
-  whiteSpace?: string
   recogLang?: string
   transLang?: string
-  bgcolor?: string
-  size1?: number
-  weight1?: number
-  color1?: string
-  st_color1?: string
-  st_width1?: number
-  size2?: number
-  weight2?: number
-  color2?: string
-  st_color2?: string
-  st_width2?: number
-  timer?: number
+  bgColor?: string
+  recogFont?: string
+  recogFontSize?: string
+  recogFontWeight?: string
+  recogFontColor?: string
+  recogFontStrokeColor?: string
+  recogFontStrokeWidth?: string
+  transFont?: string
+  transFontSize?: string
+  transFontWeight?: string
+  transFontColor?: string
+  transFontStrokeColor?: string
+  transFontStrokeWidth?: string
   phraseSepTime?: number
-  speech_text_font_selector?: string
-  trans_text_font_selector?: string
-  speech_text_font?: string
-  trans_text_font?: string
+  deleteDelay?: number
+  textAlignH?: string
+  textAlignV?: string
+}
+
+export const defaults = {
+  recogLang: 'ko',
+  transLang: 'en',
+  bgColor: '#00ff00',
+  recogFont: '',
+  recogFontSize: '36',
+  recogFontWeight: '700',
+  recogFontColor: '#ffffff',
+  recogFontStrokeColor: '#000000',
+  recogFontStrokeWidth: '2',
+  transFont: '',
+  transFontSize: '36',
+  transFontWeight: '700',
+  transFontColor: '#ffffff',
+  transFontStrokeColor: '#000000',
+  transFontStrokeWidth: '2',
+  phraseSepTime: 750,
+  deleteDelay: 30000,
+  textAlignH: 'left',
+  textAlignV: 'top',
 }
 
 export const ConfigKeys = [
   'apiKey',
-  'textAlign',
-  'v_align',
-  'whiteSpace',
   'recogLang',
   'transLang',
-  'bgcolor',
-  // recognition language text settings
-  'size1',
-  'weight1',
-  'color1',
-  'st_color1',
-  'st_width1',
-  // translated language text settings
-  'size2',
-  'weight2',
-  'color2',
-  'st_color2',
-  'st_width2',
-  'timer',
+  'bgColor',
+  'recogFont',
+  'recogFontSize',
+  'recogFontWeight',
+  'recogFontColor',
+  'recogFontStrokeColor',
+  'recogFontStrokeWidth',
+  'transFont',
+  'transFontSize',
+  'transFontWeight',
+  'transFontColor',
+  'transFontStrokeColor',
+  'transFontStrokeWidth',
   'phraseSepTime',
-  'speech_text_font_selector',
-  'trans_text_font_selector',
-  'speech_text_font',
-  'trans_text_font',
+  'deleteDelay',
+  'textAlignH',
+  'textAlignV',
 ]
 
 export function saveConfig(config: Config) {
@@ -67,4 +81,12 @@ export function getConfig() {
     config = {}
   }
   return config
+}
+
+export const toUrlParams = (config: Config) => {
+  const pairs: [string, string][] = Object.entries(config).map(([key, value]) => {
+    return [ key, JSON.stringify(value) ]
+  })
+  const params = new URLSearchParams(pairs)
+  return ('?' + params.toString()) ?? ''
 }

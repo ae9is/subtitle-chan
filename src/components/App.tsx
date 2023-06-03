@@ -1,21 +1,24 @@
-import { ChangeEvent, useState } from 'react'
-import { getConfig, saveConfig } from '../lib/config'
+import { useState } from 'react'
+import { defaults, getConfig, saveConfig } from '../lib/config'
 import { getParam } from '../lib/url'
 import logger from '../lib/logger'
-import Subtitler from './Subtitler'
+import { Subtitler } from './Subtitler'
 import { Input } from './Input'
-import './App.css'
+import { Label } from './Label'
+import { Range } from './Range'
+import { CopyLinkButton } from './CopyLinkButton'
+import { ColorInput } from './ColorInput'
+import { LanguageSelect } from './LanguageSelect'
 
-export default function App() {
+export function App() {
   const config = getConfig()
   const [apiKey, setApiKey] = useState(getParam('apiKey') || config.apiKey)
-  const defaultPhraseSepTime = 750
   const minPhraseSepTime = 100
-  const [phraseSepTime, setPhraseSepTime] = useState<number>(
-    getParam('phraseSepTime') || config.phraseSepTime || defaultPhraseSepTime
-  )
+  const [phraseSepTime, setPhraseSepTime] = useState<number>(getParam('phraseSepTime') || config.phraseSepTime || defaults.phraseSepTime)
+  const [recogLang, setRecogLang] = useState<string>(getParam('recogLang') || config.recogLang || defaults.recogLang)
+  const [transLang, setTransLang] = useState<string>(getParam('transLang') || config.transLang || defaults.transLang)
 
-  const onChangeApiKey = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeApiKey = (e: any) => {
     const newApiKey = e?.target?.value ?? ''
     setApiKey(newApiKey)
     saveConfig({ ...config, apiKey: newApiKey })
@@ -23,7 +26,7 @@ export default function App() {
 
   const onChangePhraseSepTime = (e: any) => {
     const newValue = e?.target?.value
-    let newPhraseSepTime = Number(newValue) || defaultPhraseSepTime
+    let newPhraseSepTime = Number(newValue) || defaults.phraseSepTime
     if (newPhraseSepTime < minPhraseSepTime) {
       newPhraseSepTime = minPhraseSepTime
     }
@@ -32,9 +35,19 @@ export default function App() {
     saveConfig({ ...config, phraseSepTime: newPhraseSepTime })
   }
 
+  const onChangeRecogLang = (e: any) => {
+    const newValue = e?.target?.value || defaults.recogLang
+    setRecogLang(newValue)
+  }
+
+  const onChangeTransLang = (e: any) => {
+    const newValue = e?.target?.value || defaults.transLang
+    setTransLang(newValue)
+  }
+
   return (
     <>
-      <Subtitler apiKey={apiKey} phraseSepTime={phraseSepTime} />
+      <Subtitler apiKey={apiKey} phraseSepTime={phraseSepTime} recogLang={recogLang} transLang={transLang} />
       <div className="p-8 border border-gray-200">
         <h1 className="font-medium text-3xl">subtitle-chan</h1>
         <p className="text-gray-600 mt-6">
@@ -44,8 +57,8 @@ export default function App() {
           See <a href="https://github.com/ae9is/subtitle-chan#readme">github repo</a> for
           installation instructions.
         </p>
-        <form>
-          <div className="mt-8 space-y-6">
+        <div className="mt-8 space-y-6">
+          <form>
             <div>
               {/* Better user experience storing API key as "password" in browser's password manager if we include a dummy username */}
               <input
@@ -58,31 +71,135 @@ export default function App() {
               />
             </div>
             <div>
-              <label htmlFor="password" className="text-sm text-gray-700 block mb-1 font-medium">API Key</label>
-              <input
+              <Label htmlFor="password">API Key</Label>
+              <Input
                 type="password"
                 name="apiKey"
                 id="apiKey"
                 onChange={onChangeApiKey}
                 defaultValue={apiKey}
-                className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
               />
             </div>
-            <div>
-              <label htmlFor="phraseSepTime" className="text-sm text-gray-700 block mb-1 font-medium">Phrase separation time (ms)</label>
-              <Input
-                type="text"
-                name="phraseSepTime"
-                id="phraseSepTime"
-                onChange={onChangePhraseSepTime}
-                defaultValue={phraseSepTime}
-                className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
-              />
-            </div>
+          </form>
+          <div>
+            <Label htmlFor="phraseSepTime">Phrase separation time (ms)</Label>
+            <Input
+              name="phraseSepTime"
+              id="phraseSepTime"
+              onChange={onChangePhraseSepTime}
+              defaultValue={phraseSepTime}
+            />
           </div>
-        </form>
-      </div>
+        </div>
 
+        <div className="mt-8 grid lg:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="recogFontColor">Transcript Font Color</Label>
+            <ColorInput name="recogFontColor" id="recogFontColor" defaultValue={defaults.recogFontColor} />
+          </div>
+          <div>
+            <Label htmlFor="recogFontColor">Transcript Border Color</Label>
+            <ColorInput name="recogFontStrokeColor" id="recogFontStrokeColor" defaultValue={defaults.recogFontStrokeColor} />
+          </div>
+          <div>
+            <Label htmlFor="transLang">Translation Font Color</Label>
+            <ColorInput type="color" name="transFontColor" id="transFontColor" defaultValue={defaults.transFontColor} />
+          </div>
+          <div>
+            <Label htmlFor="transFont">Translation Border Color</Label>
+            <ColorInput type="color" name="transFontStrokeColor" id="transFontStrokeColor" defaultValue={defaults.transFontStrokeColor} />
+          </div>
+        </div>
+
+        <div className="mt-8 grid lg:grid-cols-3 gap-4">
+          <div>
+            <Label>Transcript Size</Label>
+            <Range min={8} max={64} step={2} defaultValue={defaults.recogFontSize} />
+          </div>
+          <div>
+            <Label>Transcript Weight</Label>
+            <Range min={100} max={900} step={100} defaultValue={defaults.recogFontWeight} />
+          </div>
+          <div>
+            <Label>Transcript Border</Label>
+            <Range min={0} max={32} step={1} defaultValue={defaults.recogFontStrokeWidth} />
+          </div>
+          <div>
+            <Label>Translation Size</Label>
+            <Range min={8} max={64} step={2} defaultValue={defaults.transFontSize} />
+          </div>
+          <div>
+            <Label>Translation Weight</Label>
+            <Range min={100} max={900} step={100} defaultValue={defaults.transFontWeight} />
+          </div>
+          <div>
+            <Label>Translation Border</Label>
+            <Range min={0} max={32} step={1} defaultValue={defaults.transFontStrokeWidth} />
+          </div>
+        </div>
+
+        <div className="mt-8 grid lg:grid-cols-2 gap-4">
+          <div>
+            <Label htmlFor="recogLang">
+              Transcript Speech &nbsp;
+              <sup>
+                <a href="https://stackoverflow.com/questions/14257598" target="_blank">
+                  (supported languages)
+                </a>
+              </sup>
+            </Label>
+            <span className="inline-flex gap-x-4">
+              <LanguageSelect name="recogLang" id="recogLang"
+                defaultVal={defaults.recogLang}
+                onChange={onChangeRecogLang}
+              />
+              {/* 
+              <Input name="recogLang" id="recogLang"
+                defaultValue={defaults.recogLang}
+                onChange={onChangeRecogLang}
+              />
+              */}
+            </span>
+          </div>
+          <div>
+            <Label htmlFor="recogFont">Transcript Font</Label>
+            <Input name="recogFont" id="recogFont"
+              defaultValue={defaults.recogFont}
+            />
+          </div>
+          <div>
+            <Label htmlFor="transLang">
+              Translation &nbsp;
+              <sup>
+                <a href="https://cloud.google.com/translate/docs/languages" target="_blank">
+                  (supported languages)
+                </a>
+              </sup>
+            </Label>
+            <span className="inline-flex gap-x-4">
+              <LanguageSelect name="transLang" id="transLang"
+                defaultVal={defaults.transLang}
+                onChange={onChangeTransLang}
+              />
+              {/* 
+              <Input name="transLang" id="transLang"
+                defaultValue={defaults.transLang}
+                onChange={onChangeTransLang}
+              />
+              */}
+            </span>
+          </div>
+          <div>
+            <Label htmlFor="transFont">Translation Font</Label>
+            <Input name="transFont" id="transFont"
+              defaultValue={defaults.transFont}
+            />
+          </div>
+        </div>
+        <div className="mt-8 space-y-6">
+          <CopyLinkButton config={config} />
+        </div>
+      </div>
     </>
   )
 }

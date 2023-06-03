@@ -1,23 +1,18 @@
 import { useState } from 'react'
 import SpeechRecognition, { useSubtitles } from '../lib/useSubtitles'
 import { MicIcon } from './MicIcon'
+import { Subtitle } from './Subtitle'
 
 export interface SubtitlerProps {
   apiKey: string
   phraseSepTime: number
+  recogLang: string
+  transLang: string
 }
 
-export default function Subtitler(props: SubtitlerProps) {
-  const { apiKey, phraseSepTime } = props
+export function Subtitler(props: SubtitlerProps) {
+  const { apiKey, phraseSepTime, recogLang, transLang } = props
   const [enabled, setEnabled] = useState(false)
-
-  // Confirmed supported recognition languages:
-  // https://github.com/JamesBrill/react-speech-recognition/blob/master/docs/API.md#language-string
-  const recogLang = 'ko'
-
-  // Supported translation languages:
-  // https://cloud.google.com/translate/docs/languages
-  const transLang = 'en'
 
   const {
     transcript,
@@ -67,12 +62,11 @@ export default function Subtitler(props: SubtitlerProps) {
     )
   }
 
-  const testText = `
-    Qui accusamus iure qui tempora laboriosam ut ut. Ut voluptatem ut repudiandae. Ipsam distinctio aut sed architecto est velit fugit velit. Soluta nesciunt consequatur labore.
-    Et et consequuntur reiciendis aut. Sunt exercitationem repellendus id est officiis iure inventore illo. Vel expedita omnis incidunt dolor numquam est odit ipsa. Quis ut occaecati architecto. Rem nisi repudiandae in id corporis. Quia ut dolor quo alias ut rerum ad.
-    Quia doloribus repellendus in ratione ab molestiae vitae. Quam quisquam consequuntur in sunt debitis. Ratione et voluptas praesentium aspernatur suscipit sint quia amet. Rerum voluptate aspernatur vel.
-    Commodi deserunt iste quas. Animi sit blanditiis voluptatem itaque dolore. Non ut quaerat aut explicabo amet. Enim repellat et facere. Ut natus possimus eum inventore. Quaerat rerum sit quo aut tempore optio.
-    Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolores possimus amet. Modi beatae cumque officia consectetur numquam aperiam ut et.
+  const testText = `Qui accusamus iure qui tempora laboriosam ut ut. Ut voluptatem ut repudiandae. Ipsam distinctio aut sed architecto est velit fugit velit. Soluta nesciunt consequatur labore.
+Et et consequuntur reiciendis aut. Sunt exercitationem repellendus id est officiis iure inventore illo. Vel expedita omnis incidunt dolor numquam est odit ipsa. Quis ut occaecati architecto. Rem nisi repudiandae in id corporis. Quia ut dolor quo alias ut rerum ad.
+Quia doloribus repellendus in ratione ab molestiae vitae. Quam quisquam consequuntur in sunt debitis. Ratione et voluptas praesentium aspernatur suscipit sint quia amet. Rerum voluptate aspernatur vel.
+Commodi deserunt iste quas. Animi sit blanditiis voluptatem itaque dolore. Non ut quaerat aut explicabo amet. Enim repellat et facere. Ut natus possimus eum inventore. Quaerat rerum sit quo aut tempore optio.
+Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolores possimus amet. Modi beatae cumque officia consectetur numquam aperiam ut et.
   `
 
   // TODO FIXME autoscroll text area to bottom
@@ -81,29 +75,9 @@ export default function Subtitler(props: SubtitlerProps) {
 
   return (
     <>
-    {/*
-      <div className="h-40 p-8 border border-gray-200 bg-green-500 overflow-hidden">
-        <textarea
-          className="scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block"
-          value={testText}
-          readOnly
-        />
-      </div>
-    */}
-      <div className="h-40 p-8 border border-gray-200 bg-green-500 overflow-hidden">
-        <textarea
-          className="scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block"
-          value={transcript}
-          readOnly
-        />
-      </div>
-      <div className="h-40 p-8 border border-gray-200 bg-green-500 overflow-hidden">
-        <textarea
-          className="scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block"
-          value={translation}
-          readOnly
-        />
-      </div>
+      <Subtitle value={testText} bottomBorder />
+      <Subtitle value={transcript} />
+      <Subtitle value={translation} />
       <div className="p-8 border border-gray-200">
         <div className="flex space-x-4">
           <span className="py-2 px-4">
