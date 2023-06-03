@@ -76,11 +76,29 @@ export function LanguageSelect<
   return (
     <>
       <Select
-        className="w-64 w-full"
+        className="w-64"
         options={languageOptions}
         onChange={props?.onChange}
         defaultValue={defaultValueOptionType}
         isSearchable
+        components={{
+          // Hide dropdown indicator to match fontpicker
+          IndicatorSeparator: () => null,
+          DropdownIndicator: () => null,
+        }}
+        /*
+        styles={{
+          control: base => ({
+            ...base,
+            '&:active': {
+              border: '1px solid #000',
+            },
+            '&:focus': {
+              border: '1px solid #000',
+            }
+          })
+        }}
+        */
       />
     </>
   )

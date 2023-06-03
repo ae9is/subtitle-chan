@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import FontPicker from 'react-fontpicker-ts-lite'
+import 'react-fontpicker-ts-lite/dist/index.css'
+import './FontPicker.css' // Custom styling to match react-select somewhat
 import { defaults, getConfig, saveConfig } from '../lib/config'
 import { getParam } from '../lib/url'
 import logger from '../lib/logger'
@@ -22,6 +25,12 @@ export function App() {
   )
   const [transLang, setTransLang] = useState<string>(
     getParam('transLang') || config.transLang || defaults.transLang
+  )
+  const [recogFont, setRecogFont] = useState<string>(
+    getParam('recogFont') || config.recogFont || defaults.recogFont
+  )
+  const [transFont, setTransFont] = useState<string>(
+    getParam('transFont') || config.transFont || defaults.transFont
   )
 
   const onChangeApiKey = (e: any) => {
@@ -58,6 +67,8 @@ export function App() {
         phraseSepTime={phraseSepTime}
         recogLang={recogLang}
         transLang={transLang}
+        recogFont={recogFont}
+        transFont={transFont}
       />
       <div className="p-8 border border-gray-200">
         <h1 className="font-medium text-3xl">subtitle-chan</h1>
@@ -186,17 +197,15 @@ export function App() {
                 defaultVal={defaults.recogLang}
                 onChange={onChangeRecogLang}
               />
-              {/* 
-              <Input name="recogLang" id="recogLang"
-                defaultValue={defaults.recogLang}
-                onChange={onChangeRecogLang}
-              />
-              */}
             </span>
           </div>
           <div>
             <Label htmlFor="recogFont">Transcript Font</Label>
-            <Input name="recogFont" id="recogFont" defaultValue={defaults.recogFont} />
+            <FontPicker
+              //autoLoad
+              defaultValue={defaults.recogFont}
+              value={(font: string) => setRecogFont(font)}
+            />
           </div>
           <div>
             <Label htmlFor="transLang">
@@ -218,17 +227,15 @@ export function App() {
                 defaultVal={defaults.transLang}
                 onChange={onChangeTransLang}
               />
-              {/* 
-              <Input name="transLang" id="transLang"
-                defaultValue={defaults.transLang}
-                onChange={onChangeTransLang}
-              />
-              */}
             </span>
           </div>
           <div>
             <Label htmlFor="transFont">Translation Font</Label>
-            <Input name="transFont" id="transFont" defaultValue={defaults.transFont} />
+            <FontPicker
+              //autoLoad
+              defaultValue={defaults.transFont}
+              value={(font: string) => setTransFont(font)}
+            />
           </div>
         </div>
         <div className="mt-8 space-y-6">

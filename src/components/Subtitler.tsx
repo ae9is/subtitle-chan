@@ -8,10 +8,12 @@ export interface SubtitlerProps {
   phraseSepTime: number
   recogLang: string
   transLang: string
+  recogFont: string
+  transFont: string
 }
 
 export function Subtitler(props: SubtitlerProps) {
-  const { apiKey, phraseSepTime, recogLang, transLang } = props
+  const { apiKey, phraseSepTime, recogLang, transLang, recogFont, transFont } = props
   const [enabled, setEnabled] = useState(false)
 
   const {
@@ -75,9 +77,9 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
 
   return (
     <>
-      <Subtitle value={testText} bottomBorder />
-      <Subtitle value={transcript} />
-      <Subtitle value={translation} />
+      <Subtitle fontFamily={recogFont} value={testText} bottomBorder />
+      <Subtitle fontFamily={recogFont} value={transcript} />
+      <Subtitle fontFamily={transFont} value={translation} />
       <div className="p-8 border border-gray-200">
         <div className="flex space-x-4">
           <span className="py-2 px-4">
