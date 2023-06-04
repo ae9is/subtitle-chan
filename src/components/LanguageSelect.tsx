@@ -1,11 +1,13 @@
-import Select, { GroupBase, Props } from 'react-select'
+import ReactSelect, { ActionMeta, SingleValue } from 'react-select'
+import { useState } from 'react'
 
 export type LanguageType = 'transcribe' | 'translate'
 
 export interface LanguageSelectProps {
-  defaultVal?: string // Allows passing short language code instead of full react-select OptionType
+  defaultValue?: string // Allows passing short language code instead of full react-select OptionType
   languageType?: LanguageType
   id?: string
+  onChange?: (newValue: string) => void
 }
 
 // Supported translate languages
@@ -18,31 +20,42 @@ export const translateLanguages = {
   ko: ['Korean', '한국어'],
   ja: ['Japanese', '日本語'],
   ar: ['Arabic', 'العربية'],
+  zh: ['Chinese (Simplified)', '中文'],
+  'zh-TW': ['Chinese (Traditional)', '中文(台灣)'],
+  nl: ['Dutch', 'Nederlands'],
   de: ['German', 'Deutsch'],
-  es: ['Spanish', 'Español'],
   fi: ['Finnish', 'Suomi'],
   fr: ['French', 'Français'],
   id: ['Indonesian', 'Bahasa Indonesia'],
   it: ['Italian', 'Italiano'],
   pl: ['Polish', 'Polski'],
   pt: ['Portuguese', 'Português'],
-  ru: ['Russian', 'Русский'],
-  nl: ['Dutch', 'Nederlands'],
   no: ['Norwegian', 'Norsk'],
+  ru: ['Russian', 'Русский'],
   so: ['Somali', 'Soomaaliga'],
+  es: ['Spanish', 'Español'],
   sv: ['Swedish', 'Svenska'],
   th: ['Thai', 'ไทย'],
   tr: ['Turkish', 'Türkçe'],
   uk: ['Ukrainian', 'Українська'],
   vi: ['Vietnamese', 'Tiếng Việt'],
-  zh: ['Chinese (Simplified)', '中文'],
-  'zh-TW': ['Chinese (Traditional)', '中文(台灣)'],
 }
 
 // For simplicity, for now set languages to be the same subset for transcription/translation
 const transcribeLanguages = translateLanguages
 
+type Option = {
+  value: string
+  label: string
+}
+
+interface ArrayObjectSelectState {
+  selectedOption: Option | null
+}
+
+// Extending react-select
 // ref: https://stackoverflow.com/questions/66348283/
+/*
 export function LanguageSelect<
   OptionType,
   IsMulti extends boolean = false,
@@ -53,53 +66,75 @@ export function LanguageSelect<
   id,
   ...props
 }: Props<OptionType, IsMulti, GroupType> & LanguageSelectProps) {
-  // react-select: https://github.com/JedWatson/react-select#readme
+*/
+
+// ref: https://stackoverflow.com/a/74143834
+export function LanguageSelect({
+  languageType = 'translate',
+  defaultValue = 'en',
+  onChange,
+  id,
+  ...props
+}: LanguageSelectProps) {
+
   const languages = languageType === 'translate' ? translateLanguages : transcribeLanguages
-  // eslint-disable-next-line
-  // @ts-ignore
-  const defaultLabel = languages[defaultVal][0]
-  // eslint-disable-next-line
-  // @ts-ignore
-  const defaultValueOptionType: OptionType = {
-    key: defaultVal,
-    label: defaultLabel,
+  let defaultLabel = 'English'
+  if (Object.prototype.hasOwnProperty.call(languages, defaultValue)) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    defaultLabel = languages[defaultValue][0]
   }
-  // eslint-disable-next-line
-  // @ts-ignore
-  const languageOptions: OptionType[] = Object.entries(languages).map(([key, value]) => {
+  const languageOptions: Option[] = Object.entries(languages).map(([key, value]) => {
     return {
-      value: key,
-      label: value[0],
+      value: key || '',
+      label: value[0] || '',
     }
   })
 
+  const defaultOption: Option = {
+    value: defaultValue || '',
+    label: defaultLabel || '',
+  }
+
+  const [state, setState] = useState<ArrayObjectSelectState>({
+    selectedOption: defaultOption,
+  })
+
+  const handleChange = (newValue: SingleValue<Option>, meta: ActionMeta<Option>) => {
+    if (newValue !== null) {
+      setState({ selectedOption: newValue })
+      onChange?.(newValue.value)
+    }
+  }
+
   return (
     <>
-      <Select
+      <ReactSelect
         inputId={id}
-        {...props}
-        className="w-64"
         options={languageOptions}
-        defaultValue={defaultValueOptionType}
+        getOptionLabel={(opt: Option) => opt.label}
+        getOptionValue={(opt: Option) => opt.value}
+        value={state.selectedOption}
+        onChange={handleChange}
         isSearchable
         components={{
           // Hide dropdown indicator to match fontpicker
           IndicatorSeparator: () => null,
           DropdownIndicator: () => null,
         }}
-        /*
-        styles={{
-          control: base => ({
-            ...base,
-            '&:active': {
-              border: '1px solid #000',
-            },
-            '&:focus': {
-              border: '1px solid #000',
-            }
-          })
-        }}
-        */
+        className="w-64"
+//        styles={{
+//          control: base => ({
+//            ...base,
+//            '&:active': {
+//              border: '1px solid #000',
+//            },
+//            '&:focus': {
+//              border: '1px solid #000',
+//            }
+//          })
+//        }}
+        {...props}
       />
     </>
   )
