@@ -2,8 +2,7 @@ import { useState } from 'react'
 import FontPicker from 'react-fontpicker-ts-lite'
 import 'react-fontpicker-ts-lite/dist/index.css'
 import './FontPicker.css' // Custom styling to match react-select somewhat
-import { defaults, getConfig, saveConfig } from '../lib/config'
-import { getParam } from '../lib/url'
+import { defaults, getAllConfig, saveConfig, saveConfigFromUrlParams } from '../lib/config'
 import { Subtitler } from './Subtitler'
 import { Input } from './Input'
 import { Label } from './Label'
@@ -13,69 +12,55 @@ import { ColorInput } from './ColorInput'
 import { LanguageSelect } from './LanguageSelect'
 
 export function App() {
-  const config = getConfig()
-  const [apiKey, setApiKey] = useState(getParam('apiKey') || config.apiKey)
+  saveConfigFromUrlParams()
+  const config = getAllConfig()
+  const [apiKey, setApiKey] = useState(config.apiKey)
   const minPhraseSepTime = 100
   const [phraseSepTime, setPhraseSepTime] = useState<number>(
-    getParam('phraseSepTime') || config.phraseSepTime || defaults.phraseSepTime
+    config.phraseSepTime || defaults.phraseSepTime
   )
-  const [recogLang, setRecogLang] = useState<string>(
-    getParam('recogLang') || config.recogLang || defaults.recogLang
-  )
-  const [transLang, setTransLang] = useState<string>(
-    getParam('transLang') || config.transLang || defaults.transLang
-  )
-  const [recogFont, setRecogFont] = useState<string>(
-    getParam('recogFont') || config.recogFont || defaults.recogFont
-  )
-  const [transFont, setTransFont] = useState<string>(
-    getParam('transFont') || config.transFont || defaults.transFont
-  )
+  const [recogLang, setRecogLang] = useState<string>(config.recogLang || defaults.recogLang)
+  const [transLang, setTransLang] = useState<string>(config.transLang || defaults.transLang)
+  const [recogFont, setRecogFont] = useState<string>(config.recogFont || defaults.recogFont)
+  const [transFont, setTransFont] = useState<string>(config.transFont || defaults.transFont)
   const [recogFontSize, setRecogFontSize] = useState<number>(
-    Number(getParam('recogFontSize')) || config.recogFontSize || defaults.recogFontSize
+    config.recogFontSize ?? defaults.recogFontSize
   )
   const [recogFontWeight, setRecogFontWeight] = useState<number>(
-    Number(getParam('recogFontWeight')) || config.recogFontWeight || defaults.recogFontWeight
+    config.recogFontWeight ?? defaults.recogFontWeight
   )
   const [recogFontStrokeWidth, setRecogFontStrokeWidth] = useState<number>(
-    Number(getParam('recogFontStrokeWidth')) ||
-      config.recogFontStrokeWidth ||
-      defaults.recogFontStrokeWidth
+    config.recogFontStrokeWidth ?? defaults.recogFontStrokeWidth
   )
   const [transFontSize, setTransFontSize] = useState<number>(
-    Number(getParam('transFontSize')) || config.transFontSize || defaults.transFontSize
+    config.transFontSize ?? defaults.transFontSize
   )
   const [transFontWeight, setTransFontWeight] = useState<number>(
-    Number(getParam('transFontWeight')) || config.transFontWeight || defaults.transFontWeight
+    config.transFontWeight ?? defaults.transFontWeight
   )
   const [transFontStrokeWidth, setTransFontStrokeWidth] = useState<number>(
-    Number(getParam('transFontStrokeWidth')) ||
-      config.transFontStrokeWidth ||
-      defaults.transFontStrokeWidth
+    config.transFontStrokeWidth ?? defaults.transFontStrokeWidth
   )
   const [recogFontColor, setRecogFontColor] = useState<string>(
-    getParam('recogFontColor') || config.recogFontColor || defaults.recogFontColor
+    config.recogFontColor || defaults.recogFontColor
   )
   const [transFontColor, setTransFontColor] = useState<string>(
-    getParam('transFontColor') || config.transFontColor || defaults.transFontColor
+    config.transFontColor || defaults.transFontColor
   )
   const [recogFontStrokeColor, setRecogFontStrokeColor] = useState<string>(
-    getParam('recogFontStrokeColor') || config.recogFontStrokeColor || defaults.recogFontStrokeColor
+    config.recogFontStrokeColor || defaults.recogFontStrokeColor
   )
   const [transFontStrokeColor, setTransFontStrokeColor] = useState<string>(
-    getParam('transFontStrokeColor') || config.transFontStrokeColor || defaults.transFontStrokeColor
+    config.transFontStrokeColor || defaults.transFontStrokeColor
   )
-  const [bgColor, setBgColor] = useState<string>(
-    getParam('bgColor') || config.bgColor || defaults.bgColor
-  )
+  const [bgColor, setBgColor] = useState<string>(config.bgColor || defaults.bgColor)
   const [showFontTest, setShowFontTest] = useState<boolean>(
-    getParam('showFontTest') || config.showFontTest || defaults.showFontTest
+    config.showFontTest ?? defaults.showFontTest
   )
 
   const onChangeApiKey = (e: any) => {
     const newApiKey = e?.target?.value ?? ''
     setApiKey(newApiKey)
-    saveConfig({ ...config, apiKey: newApiKey })
   }
 
   const onChangePhraseSepTime = (e: any) => {
@@ -85,107 +70,107 @@ export function App() {
       newNum = minPhraseSepTime
     }
     setPhraseSepTime(newNum)
-    saveConfig({ ...config, phraseSepTime: newNum })
+    saveConfig('phraseSepTime', newNum)
   }
 
   const onChangeRecogLang = (e: any) => {
     const newValue = e?.target?.value || recogLang
     setRecogLang(newValue)
-    saveConfig({ ...config, recogLang: newValue })
+    saveConfig('recogLang', newValue)
   }
 
   const onChangeTransLang = (e: any) => {
     const newValue = e?.target?.value || transLang
     setTransLang(newValue)
-    saveConfig({ ...config, transLang: newValue })
+    saveConfig('transLang', newValue)
   }
 
   const onChangeRecogFont = (font: string) => {
     setRecogFont(font)
-    saveConfig({ ...config, recogFont: font })
+    saveConfig('recogFont', font)
   }
 
   const onChangeTransFont = (font: string) => {
     setTransFont(font)
-    saveConfig({ ...config, transFont: font })
+    saveConfig('transFont', font)
   }
 
   const onChangeRecogFontColor = (e: any) => {
     const newValue = e?.target?.value || recogFontColor
     setRecogFontColor(newValue)
-    saveConfig({ ...config, recogFontColor: newValue })
+    saveConfig('recogFontColor', newValue)
   }
 
   const onChangeTransFontColor = (e: any) => {
     const newValue = e?.target?.value || transFontColor
     setTransFontColor(newValue)
-    saveConfig({ ...config, transFontColor: newValue })
+    saveConfig('transFontColor', newValue)
   }
 
   const onChangeRecogFontStrokeColor = (e: any) => {
     const newValue = e?.target?.value || recogFontStrokeColor
     setRecogFontStrokeColor(newValue)
-    saveConfig({ ...config, recogFontStrokeColor: newValue })
+    saveConfig('recogFontStrokeColor', newValue)
   }
 
   const onChangeTransFontStrokeColor = (e: any) => {
     const newValue = e?.target?.value || transFontStrokeColor
     setTransFontStrokeColor(newValue)
-    saveConfig({ ...config, transFontStrokeColor: newValue })
+    saveConfig('transFontStrokeColor', newValue)
   }
 
   const onChangeBgColor = (e: any) => {
     const newValue = e?.target?.value || bgColor
     setBgColor(newValue)
-    saveConfig({ ...config, bgColor: newValue })
+    saveConfig('bgColor', newValue)
   }
 
   const onChangeRecogFontSize = (e: any) => {
     const newValue = e?.target?.value
     const newNum = Number(newValue) || recogFontSize
     setRecogFontSize(newNum)
-    saveConfig({ ...config, recogFontSize: newNum })
+    saveConfig('recogFontSize', newNum)
   }
 
   const onChangeRecogFontWeight = (e: any) => {
     const newValue = e?.target?.value
     const newNum = Number(newValue) || recogFontWeight
     setRecogFontWeight(newNum)
-    saveConfig({ ...config, recogFontWeight: newNum })
+    saveConfig('recogFontWeight', newNum)
   }
 
   const onChangeRecogFontStrokeWidth = (e: any) => {
     const newValue = e?.target?.value
     const newNum = Number(newValue) ?? recogFontStrokeWidth
     setRecogFontStrokeWidth(newNum)
-    saveConfig({ ...config, recogFontStrokeWidth: newNum })
+    saveConfig('recogFontStrokeWidth', newNum)
   }
 
   const onChangeTransFontSize = (e: any) => {
     const newValue = e?.target?.value
     const newNum = Number(newValue) || transFontSize
     setTransFontSize(newNum)
-    saveConfig({ ...config, transFontSize: newNum })
+    saveConfig('transFontSize', newNum)
   }
 
   const onChangeTransFontWeight = (e: any) => {
     const newValue = e?.target?.value
     const newNum = Number(newValue) || transFontWeight
     setTransFontWeight(newNum)
-    saveConfig({ ...config, transFontWeight: newNum })
+    saveConfig('transFontWeight', newNum)
   }
 
   const onChangeTransFontStrokeWidth = (e: any) => {
     const newValue = e?.target?.value
     const newNum = Number(newValue) ?? transFontStrokeWidth
     setTransFontStrokeWidth(newNum)
-    saveConfig({ ...config, transFontStrokeWidth: newNum })
+    saveConfig('transFontStrokeWidth', newNum)
   }
 
   const onChangeShowFontTest = () => {
     const newValue = !showFontTest
     setShowFontTest(newValue)
-    saveConfig({ ...config, showFontTest: newValue })
+    saveConfig('showFontTest', newValue)
   }
 
   return (
@@ -456,7 +441,7 @@ export function App() {
         </div>
         <div className="mt-8 grid lg:grid-cols-2 gap-4">
           <div>
-            <CopyLinkButton config={config} />
+            <CopyLinkButton />
           </div>
           <span className="inline-flex gap-x-4 h-4 items-baseline">
             <input

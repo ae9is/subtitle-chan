@@ -4,7 +4,7 @@ import { MicIcon } from './MicIcon'
 import { Subtitle } from './Subtitle'
 
 export interface SubtitlerProps {
-  apiKey: string
+  apiKey?: string
   phraseSepTime: number
   recogLang: string
   transLang: string
