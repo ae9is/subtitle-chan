@@ -11,7 +11,7 @@ export function Label(props: LabelProps) {
       <label htmlFor={htmlFor} className="text-sm text-gray-700 block mb-1 font-medium">
         {children}
       </label>
-      {value && <label className="text-sm text-gray-500 block mb-1 font-normal">{value}</label>}
+      {value && <div className="text-sm text-gray-500 block mb-1 font-normal">{value}</div>}
     </div>
   )
 }

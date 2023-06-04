@@ -352,13 +352,13 @@ export function App() {
           <div>
             <Label htmlFor="recogFont">
               Transcript Font
-              <FontPicker
-                //autoLoad
-                inputId="recogFont"
-                defaultValue={recogFont}
-                value={(font: string) => onChangeRecogFont(font)}
-              />
             </Label>
+            <FontPicker
+              autoLoad
+              inputId="recogFont"
+              defaultValue={recogFont}
+              value={(font: string) => onChangeRecogFont(font)}
+            />
           </div>
           <div>
             <Label htmlFor="transLang">
@@ -385,13 +385,13 @@ export function App() {
           <div>
             <Label htmlFor="transFont">
               Translation Font
-              <FontPicker
-                //autoLoad
-                inputId="transFont"
-                defaultValue={transFont}
-                value={(font: string) => onChangeTransFont(font)}
-              />
             </Label>
+            <FontPicker
+              autoLoad
+              inputId="transFont"
+              defaultValue={transFont}
+              value={(font: string) => onChangeTransFont(font)}
+            />
           </div>
         </div>
         <div className="mt-8 grid lg:grid-cols-2 gap-4">
