@@ -22,7 +22,7 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
   const [translation, setTranslation] = useState('')
 
   const {
-    recogLang = 'kr',
+    recogLang = 'ko',
     transLang = 'en',
     interimResults = true,
     apiKey,
