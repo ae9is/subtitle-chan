@@ -1,5 +1,6 @@
 import cx from 'classnames'
 import './Subtitle.css'
+import { useEffect, useRef } from 'react'
 
 export interface SubtitleProps {
   value?: string
@@ -12,6 +13,7 @@ export interface SubtitleProps {
   fontWeight?: number
   fontStrokeWidth?: number
   inputId?: string
+  scrollBottom?: boolean
 }
 
 export function Subtitle(props: SubtitleProps) {
@@ -26,13 +28,25 @@ export function Subtitle(props: SubtitleProps) {
     fontWeight,
     fontStrokeWidth,
     inputId,
+    scrollBottom = true,
   } = props
-
-  const textStroke = (fontStrokeWidth ?? '2') + 'px ' + (fontStrokeColor || 'black')
 
   // As alternative to -webkit-text-stroke, can also create text outline via drop shadow:
   //  drop-shadow-[0_2px_2px_rgba(0,0,0,1.0)]
   // ref: https://stackoverflow.com/questions/70504047/how-to-have-a-bordered-text-in-tailwind
+  const textStroke = (fontStrokeWidth ?? '2') + 'px ' + (fontStrokeColor || 'black')
+
+  const textarea = useRef<HTMLTextAreaElement>(null)
+  const scrollToBottom = () => {
+    if (textarea?.current) {
+      textarea.current.scrollTop = 999999
+    }
+  }
+  useEffect(() => {
+    if (scrollBottom) {
+      scrollToBottom()
+    }
+  }, [value, scrollBottom])
 
   return (
     <>
@@ -47,6 +61,7 @@ export function Subtitle(props: SubtitleProps) {
         }}
       >
         <textarea
+          ref={textarea}
           id={inputId}
           className="schan-v-fade outline-none border-none leading-tight text-4xl font-bold scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block"
           style={{
@@ -57,6 +72,7 @@ export function Subtitle(props: SubtitleProps) {
             fontWeight,
           }}
           value={value}
+          onChange={scrollToBottom}
           readOnly
         />
       </div>

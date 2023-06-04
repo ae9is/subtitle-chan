@@ -98,8 +98,7 @@ export function Subtitler({
 Et et consequuntur reiciendis aut. Sunt exercitationem repellendus id est officiis iure inventore illo. Vel expedita omnis incidunt dolor numquam est odit ipsa. Quis ut occaecati architecto. Rem nisi repudiandae in id corporis. Quia ut dolor quo alias ut rerum ad.
 Quia doloribus repellendus in ratione ab molestiae vitae. Quam quisquam consequuntur in sunt debitis. Ratione et voluptas praesentium aspernatur suscipit sint quia amet. Rerum voluptate aspernatur vel.
 Commodi deserunt iste quas. Animi sit blanditiis voluptatem itaque dolore. Non ut quaerat aut explicabo amet. Enim repellat et facere. Ut natus possimus eum inventore. Quaerat rerum sit quo aut tempore optio.
-Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolores possimus amet. Modi beatae cumque officia consectetur numquam aperiam ut et.
-  `
+Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolores possimus amet. Modi beatae cumque officia consectetur numquam aperiam ut et.`
 
   // TODO FIXME autoscroll text area to bottom
 
@@ -117,6 +116,7 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
           fontSize={recogFontSize}
           fontWeight={recogFontWeight}
           fontStrokeWidth={recogFontStrokeWidth}
+          scrollBottom={false}
         />
       )}
       <Subtitle
@@ -140,6 +140,7 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
         fontSize={transFontSize}
         fontWeight={transFontWeight}
         fontStrokeWidth={transFontStrokeWidth}
+        scrollBottom={false}
       />
       <div className="p-8 border border-gray-200">
         <div className="flex space-x-4">
