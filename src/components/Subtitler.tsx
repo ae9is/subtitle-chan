@@ -106,8 +106,12 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
   // TODO fade edges of text area text
 
   return (
-    <>{showFontTest && (
-        <Subtitle fontFamily={recogFont} value={testText} bottomBorder
+    <>
+      {showFontTest && (
+        <Subtitle
+          fontFamily={recogFont}
+          value={testText}
+          bottomBorder
           inputId="testSubtitles"
           bgColor={bgColor}
           fontColor={recogFontColor}
@@ -117,7 +121,9 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
           fontStrokeWidth={recogFontStrokeWidth}
         />
       )}
-      <Subtitle fontFamily={recogFont} value={transcript}
+      <Subtitle
+        fontFamily={recogFont}
+        value={transcript}
         inputId="recogSubtitles"
         bgColor={bgColor}
         fontColor={recogFontColor}
@@ -126,7 +132,9 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
         fontWeight={recogFontWeight}
         fontStrokeWidth={recogFontStrokeWidth}
       />
-      <Subtitle fontFamily={transFont} value={translation}
+      <Subtitle
+        fontFamily={transFont}
+        value={translation}
         inputId="transSubtitles"
         bgColor={bgColor}
         fontColor={transFontColor}

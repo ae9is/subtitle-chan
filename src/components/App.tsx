@@ -38,7 +38,9 @@ export function App() {
     Number(getParam('recogFontWeight')) || config.recogFontWeight || defaults.recogFontWeight
   )
   const [recogFontStrokeWidth, setRecogFontStrokeWidth] = useState<number>(
-    Number(getParam('recogFontStrokeWidth')) || config.recogFontStrokeWidth || defaults.recogFontStrokeWidth
+    Number(getParam('recogFontStrokeWidth')) ||
+      config.recogFontStrokeWidth ||
+      defaults.recogFontStrokeWidth
   )
   const [transFontSize, setTransFontSize] = useState<number>(
     Number(getParam('transFontSize')) || config.transFontSize || defaults.transFontSize
@@ -47,7 +49,9 @@ export function App() {
     Number(getParam('transFontWeight')) || config.transFontWeight || defaults.transFontWeight
   )
   const [transFontStrokeWidth, setTransFontStrokeWidth] = useState<number>(
-    Number(getParam('transFontStrokeWidth')) || config.transFontStrokeWidth || defaults.transFontStrokeWidth
+    Number(getParam('transFontStrokeWidth')) ||
+      config.transFontStrokeWidth ||
+      defaults.transFontStrokeWidth
   )
   const [recogFontColor, setRecogFontColor] = useState<string>(
     getParam('recogFontColor') || config.recogFontColor || defaults.recogFontColor
@@ -301,28 +305,88 @@ export function App() {
 
         <div className="mt-8 grid lg:grid-cols-3 gap-4">
           <div>
-            <Label htmlFor="recogFontSize" value={recogFontSize + 'px'}>Transcript Size</Label>
-            <Range name="recogFontSize" id="recogFontSize" min={8} max={64} step={2} defaultValue={recogFontSize} onChange={onChangeRecogFontSize} />
+            <Label htmlFor="recogFontSize" value={recogFontSize + 'px'}>
+              Transcript Size
+            </Label>
+            <Range
+              name="recogFontSize"
+              id="recogFontSize"
+              min={8}
+              max={64}
+              step={2}
+              defaultValue={recogFontSize}
+              onChange={onChangeRecogFontSize}
+            />
           </div>
           <div>
-            <Label htmlFor="recogFontWeight" value={recogFontWeight + ''}>Transcript Weight</Label>
-            <Range name="recogFontWeight" id="recogFontWeight" min={100} max={900} step={100} defaultValue={recogFontWeight} onChange={onChangeRecogFontWeight} />
+            <Label htmlFor="recogFontWeight" value={recogFontWeight + ''}>
+              Transcript Weight
+            </Label>
+            <Range
+              name="recogFontWeight"
+              id="recogFontWeight"
+              min={100}
+              max={900}
+              step={100}
+              defaultValue={recogFontWeight}
+              onChange={onChangeRecogFontWeight}
+            />
           </div>
           <div>
-            <Label htmlFor="recogFontStrokeWidth" value={recogFontStrokeWidth + 'px'}>Transcript Border</Label>
-            <Range name="recogFontStrokeWidth" id="recogFontStrokeWidth" min={0} max={32} step={1} defaultValue={recogFontStrokeWidth} onChange={onChangeRecogFontStrokeWidth} />
+            <Label htmlFor="recogFontStrokeWidth" value={recogFontStrokeWidth + 'px'}>
+              Transcript Border
+            </Label>
+            <Range
+              name="recogFontStrokeWidth"
+              id="recogFontStrokeWidth"
+              min={0}
+              max={32}
+              step={1}
+              defaultValue={recogFontStrokeWidth}
+              onChange={onChangeRecogFontStrokeWidth}
+            />
           </div>
           <div>
-            <Label htmlFor="transFontSize" value={transFontSize + 'px'}>Translation Size</Label>
-            <Range name="transFontSize" id="transFontSize" min={8} max={64} step={2} defaultValue={transFontSize} onChange={onChangeTransFontSize}/>
+            <Label htmlFor="transFontSize" value={transFontSize + 'px'}>
+              Translation Size
+            </Label>
+            <Range
+              name="transFontSize"
+              id="transFontSize"
+              min={8}
+              max={64}
+              step={2}
+              defaultValue={transFontSize}
+              onChange={onChangeTransFontSize}
+            />
           </div>
           <div>
-            <Label htmlFor="transFontWeight" value={transFontWeight + ''}>Translation Weight</Label>
-            <Range name="transFontWeight" id="transFontWeight" min={100} max={900} step={100} defaultValue={transFontWeight} onChange={onChangeTransFontWeight} />
+            <Label htmlFor="transFontWeight" value={transFontWeight + ''}>
+              Translation Weight
+            </Label>
+            <Range
+              name="transFontWeight"
+              id="transFontWeight"
+              min={100}
+              max={900}
+              step={100}
+              defaultValue={transFontWeight}
+              onChange={onChangeTransFontWeight}
+            />
           </div>
           <div>
-            <Label htmlFor="transFontStrokeWidth" value={transFontStrokeWidth + 'px'}>Translation Border</Label>
-            <Range name="transFontStrokeWidth" id="transFontStrokeWidth" min={0} max={32} step={1} defaultValue={transFontStrokeWidth} onChange={onChangeTransFontStrokeWidth} />
+            <Label htmlFor="transFontStrokeWidth" value={transFontStrokeWidth + 'px'}>
+              Translation Border
+            </Label>
+            <Range
+              name="transFontStrokeWidth"
+              id="transFontStrokeWidth"
+              min={0}
+              max={32}
+              step={1}
+              defaultValue={transFontStrokeWidth}
+              onChange={onChangeTransFontStrokeWidth}
+            />
           </div>
         </div>
 
@@ -350,9 +414,7 @@ export function App() {
             </span>
           </div>
           <div>
-            <Label htmlFor="recogFont">
-              Transcript Font
-            </Label>
+            <Label htmlFor="recogFont">Transcript Font</Label>
             <FontPicker
               autoLoad
               inputId="recogFont"
@@ -383,9 +445,7 @@ export function App() {
             </span>
           </div>
           <div>
-            <Label htmlFor="transFont">
-              Translation Font
-            </Label>
+            <Label htmlFor="transFont">Translation Font</Label>
             <FontPicker
               autoLoad
               inputId="transFont"

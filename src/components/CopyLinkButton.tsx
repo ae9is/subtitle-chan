@@ -1,7 +1,11 @@
 import { toUrlParams } from '../lib/config'
 import { CopyIcon } from './CopyIcon'
 
-export interface CopyLinkButtonProps extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+export interface CopyLinkButtonProps
+  extends React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  > {
   config: Record<string, string>
 }
 
