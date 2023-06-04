@@ -5,7 +5,5 @@ export function App() {
   // Parse url params into localstorage config once on page load
   saveConfigFromUrlParams()
 
-  return (
-    <Main />
-  )
+  return <Main />
 }

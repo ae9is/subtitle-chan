@@ -76,7 +76,6 @@ export function LanguageSelect({
   id,
   ...props
 }: LanguageSelectProps) {
-
   const languages = languageType === 'translate' ? translateLanguages : transcribeLanguages
   let defaultLabel = 'English'
   if (Object.prototype.hasOwnProperty.call(languages, defaultValue)) {
@@ -123,17 +122,17 @@ export function LanguageSelect({
           DropdownIndicator: () => null,
         }}
         className="w-64"
-//        styles={{
-//          control: base => ({
-//            ...base,
-//            '&:active': {
-//              border: '1px solid #000',
-//            },
-//            '&:focus': {
-//              border: '1px solid #000',
-//            }
-//          })
-//        }}
+        //styles={{
+        //  control: base => ({
+        //    ...base,
+        //    '&:active': {
+        //      border: '1px solid #000',
+        //    },
+        //    '&:focus': {
+        //      border: '1px solid #000',
+        //    }
+        //  })
+        //}}
         {...props}
       />
     </>

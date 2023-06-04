@@ -103,8 +103,6 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
 
   // TODO FIXME autoscroll text area to bottom
 
-  // TODO fade edges of text area text
-
   return (
     <>
       {showFontTest && (

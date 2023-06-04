@@ -118,12 +118,14 @@ export function getAllConfig() {
 }
 
 export function toUrlParams(config: Config) {
-  const pairs: [string, string][] = Object.entries(config).map(([key, value]) => {
-    if (key && value) {
-      return [key, '' + value]
-    }
-    return undefined
-  }).filter((x): x is [string, string] => !!x)
+  const pairs: [string, string][] = Object.entries(config)
+    .map(([key, value]) => {
+      if (key && value) {
+        return [key, '' + value]
+      }
+      return undefined
+    })
+    .filter((x): x is [string, string] => !!x)
   const params = new URLSearchParams(pairs)
   return '?' + params.toString() ?? ''
 }

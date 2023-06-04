@@ -12,7 +12,6 @@ export interface CopyLinkButtonProps
 // Construct a link that will open up the app with all settings pre-populated,
 //  and copy it to the clipboard so the user can open and/or bookmark it.
 export function CopyLinkButton(props?: CopyLinkButtonProps) {
-
   const handleClick = () => {
     const base = window.location.href.split('?')[0]
     const url = base + toUrlParams(getAllConfig())
