@@ -22,6 +22,7 @@ export interface Config {
   textAlignH?: string
   textAlignV?: string
   showFontTest?: boolean
+  hideConfig?: boolean
 }
 
 export const defaults = {
@@ -45,6 +46,7 @@ export const defaults = {
   textAlignH: 'left',
   textAlignV: 'top',
   showFontTest: false,
+  hideConfig: false,
 }
 
 export const ConfigKeys = [
@@ -69,6 +71,7 @@ export const ConfigKeys = [
   'textAlignH',
   'textAlignV',
   'showFontTest',
+  'hideConfig',
 ]
 
 // Avoid race conditions by setting and getting localstorage keys individually
@@ -113,6 +116,7 @@ export function getAllConfig() {
     transFontStrokeColor: getConfig('transFontStrokeColor'),
     bgColor: getConfig('bgColor'),
     showFontTest: getConfig('showFontTest'),
+    hideConfig: getConfig('hideConfig'),
   }
   return config
 }
@@ -150,6 +154,7 @@ export function getConfigFromUrlParams() {
     transFontStrokeColor: params.get('transFontStrokeColor') || undefined,
     bgColor: params.get('bgColor') || undefined,
     showFontTest: parseBoolean(params.get('showFontTest')),
+    hideConfig: parseBoolean(params.get('hideConfig')),
   }
   return config
 }

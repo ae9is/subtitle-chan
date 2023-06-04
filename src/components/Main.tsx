@@ -13,6 +13,7 @@ import { LanguageSelect } from './LanguageSelect'
 
 export function Main() {
   const config = getAllConfig()
+  const hideConfig = config.hideConfig ?? false
   const [apiKey, setApiKey] = useState(config.apiKey)
   const minPhraseSepTime = 100
   const [phraseSepTime, setPhraseSepTime] = useState<number>(
@@ -194,6 +195,7 @@ export function Main() {
         transFontStrokeWidth={transFontStrokeWidth}
         showFontTest={showFontTest}
       />
+      {!hideConfig && (
       <div className="p-8 border border-gray-200">
         <h1 className="font-medium text-3xl">subtitle-chan</h1>
         <p className="mt-4">This is a live demo showing how to use subtitle-chan.</p>
@@ -453,6 +455,7 @@ export function Main() {
           </span>
         </div>
       </div>
+      )}
     </>
   )
 }
