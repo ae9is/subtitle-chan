@@ -1,4 +1,5 @@
 import cx from 'classnames'
+import './Subtitle.css'
 
 export interface SubtitleProps {
   value?: string
@@ -39,7 +40,7 @@ export function Subtitle(props: SubtitleProps) {
         className={cx(
           { 'border-b': bottomBorder },
           { 'bg-pure-green': !bgColor },
-          'h-40 p-8 border-gray-200 overflow-hidden'
+          'h-40 p-4 border-gray-200 overflow-hidden'
         )}
         style={{
           backgroundColor: bgColor,
@@ -47,7 +48,7 @@ export function Subtitle(props: SubtitleProps) {
       >
         <textarea
           id={inputId}
-          className="text-4xl font-bold scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block"
+          className="schan-v-fade outline-none border-none leading-tight text-4xl font-bold scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block"
           style={{
             fontFamily,
             color: fontColor,
