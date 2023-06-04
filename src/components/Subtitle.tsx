@@ -63,7 +63,8 @@ export function Subtitle(props: SubtitleProps) {
         <textarea
           ref={textarea}
           id={inputId}
-          className="schan-v-fade outline-none border-none leading-tight text-4xl font-bold scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block"
+          //className="schan-v-fade"
+          className="outline-none border-none leading-tight text-4xl font-bold scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block"
           style={{
             fontFamily,
             color: fontColor,
