@@ -38,7 +38,7 @@ export class Input extends Component<
         {...this.props}
         onChange={undefined}
         onInput={undefined}
-        className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
+        className="disabled:opacity-50 bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
       />
     )
   }

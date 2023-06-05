@@ -23,6 +23,10 @@ export interface Config {
   textAlignV?: string
   showFontTest?: boolean
   hideConfig?: boolean
+  customRecogFont?: string
+  customTransFont?: string
+  useCustomRecogFont?: boolean
+  useCustomTransFont?: boolean
 }
 
 export const defaults = {
@@ -47,6 +51,10 @@ export const defaults = {
   textAlignV: 'top',
   showFontTest: false,
   hideConfig: false,
+  customRecogFont: 'Ubuntu',
+  customTransFont: 'Ubuntu',
+  useCustomRecogFont: false,
+  useCustomTransFont: false,
 }
 
 export const ConfigKeys = [
@@ -72,6 +80,10 @@ export const ConfigKeys = [
   'textAlignV',
   'showFontTest',
   'hideConfig',
+  'customRecogFont',
+  'customTransFont',
+  'useCustomRecogFont',
+  'useCustomTransFont',
 ]
 
 // Avoid race conditions by setting and getting localstorage keys individually
@@ -117,6 +129,10 @@ export function getAllConfig() {
     bgColor: getConfig('bgColor'),
     showFontTest: getConfig('showFontTest'),
     hideConfig: getConfig('hideConfig'),
+    customRecogFont: getConfig('customRecogFont'),
+    customTransFont: getConfig('customTransFont'),
+    useCustomRecogFont: getConfig('useCustomRecogFont'),
+    useCustomTransFont: getConfig('useCustomTransFont'),
   }
   return config
 }
@@ -155,6 +171,10 @@ export function getConfigFromUrlParams() {
     bgColor: params.get('bgColor') || undefined,
     showFontTest: parseBoolean(params.get('showFontTest')),
     hideConfig: parseBoolean(params.get('hideConfig')),
+    customRecogFont: params.get('customRecogFont') || undefined,
+    customTransFont: params.get('customTransFont') || undefined,
+    useCustomRecogFont: parseBoolean(params.get('useCustomRecogFont')),
+    useCustomTransFont: parseBoolean(params.get('useCustomTransFont')),
   }
   return config
 }

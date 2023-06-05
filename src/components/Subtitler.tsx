@@ -100,8 +100,6 @@ Quia doloribus repellendus in ratione ab molestiae vitae. Quam quisquam consequu
 Commodi deserunt iste quas. Animi sit blanditiis voluptatem itaque dolore. Non ut quaerat aut explicabo amet. Enim repellat et facere. Ut natus possimus eum inventore. Quaerat rerum sit quo aut tempore optio.
 Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolores possimus amet. Modi beatae cumque officia consectetur numquam aperiam ut et.`
 
-  // TODO FIXME autoscroll text area to bottom
-
   return (
     <>
       {showFontTest && (
