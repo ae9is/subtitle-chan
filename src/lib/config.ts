@@ -27,6 +27,7 @@ export interface Config {
   customTransFont?: string
   useCustomRecogFont?: boolean
   useCustomTransFont?: boolean
+  showHistory?: boolean
 }
 
 export const defaults = {
@@ -55,6 +56,7 @@ export const defaults = {
   customTransFont: 'Ubuntu',
   useCustomRecogFont: false,
   useCustomTransFont: false,
+  showHistory: false,
 }
 
 export const ConfigKeys = [
@@ -84,6 +86,7 @@ export const ConfigKeys = [
   'customTransFont',
   'useCustomRecogFont',
   'useCustomTransFont',
+  'showHistory',
 ]
 
 // Avoid race conditions by setting and getting localstorage keys individually
@@ -133,6 +136,7 @@ export function getAllConfig() {
     customTransFont: getConfig('customTransFont'),
     useCustomRecogFont: getConfig('useCustomRecogFont'),
     useCustomTransFont: getConfig('useCustomTransFont'),
+    showHistory: getConfig('showHistory'),
   }
   return config
 }
@@ -175,6 +179,7 @@ export function getConfigFromUrlParams() {
     customTransFont: params.get('customTransFont') || undefined,
     useCustomRecogFont: parseBoolean(params.get('useCustomRecogFont')),
     useCustomTransFont: parseBoolean(params.get('useCustomTransFont')),
+    showHistory: parseBoolean(params.get('showHistory')),
   }
   return config
 }

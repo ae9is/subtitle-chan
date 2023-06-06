@@ -22,6 +22,7 @@ export interface SubtitlerProps {
   transFontWeight: number
   transFontStrokeWidth: number
   showFontTest?: boolean
+  showHistory?: boolean
 }
 
 export function Subtitler({
@@ -43,6 +44,7 @@ export function Subtitler({
   transFontWeight,
   transFontStrokeWidth,
   showFontTest,
+  showHistory,
 }: SubtitlerProps) {
   const [enabled, setEnabled] = useState(false)
 
@@ -59,6 +61,7 @@ export function Subtitler({
     apiKey,
     phraseSepTime,
     enabled,
+    showHistory,
   })
 
   const handleStart = () => {
@@ -138,7 +141,7 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
         fontSize={transFontSize}
         fontWeight={transFontWeight}
         fontStrokeWidth={transFontStrokeWidth}
-        scrollBottom={false}
+        scrollBottom={showHistory}
       />
       <div className="p-8 border border-gray-200">
         <div className="flex space-x-4">

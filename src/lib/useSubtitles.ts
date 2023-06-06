@@ -18,6 +18,7 @@ export interface useSubtitlesProps {
   maxPhraseLength?: number
   maxDelay?: number
   usePost?: boolean
+  showHistory?: boolean
 }
 
 export function useSubtitles(props: useSubtitlesProps = {}) {
@@ -42,6 +43,7 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
     maxPhraseLength = 200, // <2000
     maxDelay = 5000, // ms, must be less than about a minute, see above
     usePost = false,
+    showHistory = false,
   } = props
 
   const transUrl = 'https://script.google.com/macros/s/' + apiKey + '/exec'
@@ -147,16 +149,15 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
     }
   }
 
+  const returnedTranscript = showHistory ? transcriptLog : (interimResults ? transcript : finalTranscript)
+  const returnedTranslation = showHistory ? translationLog : translation
+
   return {
-    transcript: interimResults ? transcript : finalTranscript,
-    //transcript: transcriptLog,
+    transcript: returnedTranscript,
+    translation: returnedTranslation,
     listening,
     reset,
     browserSupportsSpeechRecognition,
     isMicrophoneAvailable,
-    translation,
-    //translation: translationLog,
-    transcriptLog,
-    translationLog,
   }
 }

@@ -67,6 +67,9 @@ export function Main() {
   const [showFontTest, setShowFontTest] = useState<boolean>(
     config.showFontTest ?? defaults.showFontTest
   )
+  const [showHistory, setShowHistory] = useState<boolean>(
+    config.showHistory ?? defaults.showHistory
+  )
 
   const onChangeApiKey = (e: any) => {
     const newApiKey = e?.target?.value ?? ''
@@ -203,6 +206,12 @@ export function Main() {
     saveConfig('showFontTest', newValue)
   }
 
+  const onChangeShowHistory = () => {
+    const newValue = !showHistory
+    setShowHistory(newValue)
+    saveConfig('showHistory', newValue)
+  }
+
   return (
     <>
       <Subtitler
@@ -224,6 +233,7 @@ export function Main() {
         transFontWeight={transFontWeight}
         transFontStrokeWidth={transFontStrokeWidth}
         showFontTest={showFontTest}
+        showHistory={showHistory}
       />
       {!hideConfig && (
         <div className="p-8 border border-gray-200">
@@ -478,17 +488,30 @@ export function Main() {
             <div>
               <CopyLinkButton />
             </div>
-            <span className="inline-flex gap-x-4 h-4 items-baseline">
-              <input
-                id="showFontTest"
-                name="showFontTest"
-                type="checkbox"
-                checked={showFontTest}
-                onChange={onChangeShowFontTest}
-                className="disabled:opacity-50"
-              />
-              <Label htmlFor="showFontTest">Show font test?</Label>
-            </span>
+            <div className="grid grid-cols-2 gap-4">
+              <span className="inline-flex gap-x-4 h-4 items-baseline">
+                <input
+                  id="showFontTest"
+                  name="showFontTest"
+                  type="checkbox"
+                  checked={showFontTest}
+                  onChange={onChangeShowFontTest}
+                  className="disabled:opacity-50"
+                />
+                <Label htmlFor="showFontTest">Show font test?</Label>
+              </span>
+              <span className="inline-flex gap-x-4 h-4 items-baseline">
+                <input
+                  id="showHistory"
+                  name="showHistory"
+                  type="checkbox"
+                  checked={showHistory}
+                  onChange={onChangeShowHistory}
+                  className="disabled:opacity-50"
+                />
+                <Label htmlFor="showHistory">Show history?</Label>
+              </span>
+            </div>
           </div>
         </div>
       )}
