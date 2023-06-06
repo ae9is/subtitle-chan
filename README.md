@@ -1,13 +1,13 @@
 # subtitle-chan
 
-Forked from https://github.com/sayonari/jimakuChan (jimaku = subtitle) and rewritten for React + Vite + Typescript.
+Forked from https://github.com/sayonari/jimakuChan. (jimaku = subtitle)
 
 Records live speech from the browser and uses the web speech api to perform transcription, with optional translation via an external api.
 
 # Requirements
 
-* Any major browser other than Firefox
-* Translation service and API key (see below)
+* Not Firefox
+* API key for translation service
 
 # Usage
 
@@ -18,7 +18,7 @@ https://ae9is.github.io/subtitle-chan/
 
 Transcription, i.e. creating subtitles from speech, should just work as is if your browser is supported. Make sure Javascript is enabled and the page is allowed to connect to your mic.
 
-The web speech api including speech recognition is not currently supported on Firefox. Other major browsers should work. You'll need an internet connection on browsers that use web services to do the speech recognition.
+The web speech api including speech recognition is not currently supported on Firefox (May'23). Other major browsers should work.
 
 See here for a browser compatibility chart: https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#api.speechrecognition
 

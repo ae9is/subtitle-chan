@@ -1,7 +1,4 @@
-// ESLint does not support ESM config
-// ref: https://eslint.org/docs/latest/use/configure/configuration-files#configuration-file-formats
-// eslint-disable-next-line no-undef
-module.exports = {
+export default {
   root: true,
   env: {
     browser: true,
