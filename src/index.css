@@ -1,3 +1,9 @@
+/* ref: https://tailwindcss.com/docs/guides/vite */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
 :root {
   font-family: system-ui;
   line-height: 1.6em;
@@ -17,5 +23,13 @@
   :root {
     color: #213547;
     background-color: #ffffff;
+  }
+}
+*/
+
+/* ref: https://tailwindcss.com/docs/preflight */
+@layer base {
+  a {
+    @apply hover:underline text-blue-600 hover:text-blue-800 visited:text-purple-600;
   }
 }
