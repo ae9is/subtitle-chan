@@ -40,26 +40,29 @@ export function FontPickerOrCustom(props: FontPickerOrCustomProps) {
     onToggleCustom?.(newValue)
   }
 
+  const customInputId = id ? id + '-custom' : undefined
+  const customCheckboxId = id ? id + '-useCustom' : undefined
+
   return (
     <>
       <FontPicker autoLoad inputId={id} defaultValue={defaultValue} value={handleChange} />
       <span className="inline-flex gap-x-4 px-1 py-2 items-end">
         <span className="inline-flex gap-x-2 mb-[0.125rem] min-h-[1.5rem] pl-[1.5rem]">
           <input
-            id="useCustomFont"
-            name="useCustomFont"
+            id={customCheckboxId}
+            name={customCheckboxId}
             type="checkbox"
             checked={useCustom}
             onChange={handleChangeCheckbox}
             className="disabled:opacity-50"
           />
-          <label className="inline-block pl-[0.15rem] hover:cursor-pointer" htmlFor="useCustomFont">
+          <label className="inline-block pl-[0.15rem] hover:cursor-pointer" htmlFor={customCheckboxId}>
             Custom?
           </label>
         </span>
         <Input
           disabled={!useCustom}
-          name={id}
+          name={customInputId}
           onChange={handleChangeCustom}
           defaultValue={defaultValueCustom}
           placeholder={'Custom browser font'}
