@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import logger from './logger'
+import { appendToFixedSizeString } from './history'
+import { E_ALREADY_LOCKED, Mutex, tryAcquire } from 'async-mutex'
 
 export default SpeechRecognition
 
@@ -21,6 +23,10 @@ export interface useSubtitlesProps {
 export function useSubtitles(props: useSubtitlesProps = {}) {
   const [translation, setTranslation] = useState('')
 
+  const maxLogSize = 5000 // Fairly arbitrary, rendering plaintext is cheap
+  const [transcriptLog, setTranscriptLog] = useState('')
+  const [translationLog, setTranslationLog] = useState('')
+
   const {
     recogLang = 'ko',
     transLang = 'en',
@@ -33,7 +39,7 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
     // This yields max delay of 2000 / 50 = 40s.
     // More realistic max rate of speech is 300 wpm i.e. 80s.
     // I.e. max delay in practice can be whatever the user wants.
-    maxPhraseLength = 1000, // a bit less than 2000
+    maxPhraseLength = 200, // <2000
     maxDelay = 5000, // ms, must be less than about a minute, see above
     usePost = false,
   } = props
@@ -43,7 +49,7 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
   // Note: transcript = final + ' ' + interim
   const {
     transcript,
-    interimTranscript,
+    //interimTranscript,
     finalTranscript,
     listening,
     resetTranscript,
@@ -51,32 +57,50 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
     isMicrophoneAvailable,
   } = useSpeechRecognition()
 
-  // Every time finalTranscript is updated the timer resets
   useEffect(() => {
-    // Don't set a new timer if finalTranscript has just been reset i.e. is still empty
-    let timer: NodeJS.Timeout
+    const maxDelayTimer = setTimeout(() => {
+      if (finalTranscript) {
+        requestTranslationQuery()
+      }
+    }, maxDelay)
+    let phraseTimer: NodeJS.Timeout
     if (finalTranscript) {
-      timer = setTimeout(() => {
-        if (finalTranscript?.trim().length > 0) {
-          queryTranslation()
-        }
-      }, phraseSepTime)
-    }
-    return () => {
-      if (timer) {
-        clearTimeout(timer)
+      if (finalTranscript.length > maxPhraseLength) {
+        requestTranslationQuery()
+      } else {
+        phraseTimer = setTimeout(() => {
+          if (finalTranscript.length > minPhraseLength) {
+            requestTranslationQuery()
+          }
+        }, phraseSepTime)
       }
     }
-  }, [finalTranscript, phraseSepTime])
+    return () => {
+      if (maxDelayTimer) {
+        clearTimeout(maxDelayTimer)
+      }
+      if (phraseTimer) {
+        clearTimeout(phraseTimer)
+      }
+    }
+  }, [finalTranscript, maxDelay, maxPhraseLength, minPhraseLength, phraseSepTime]) // User settings changes break transcript, could rework this
 
-  const queryTranslation = async () => {
-    const text = finalTranscript
-    resetTranscript()
-    if (apiKey) {
-      if (usePost) {
-        await doPost(text)
-      } else {
-        await doGet(text)
+  // Can be called multiple times at once, but uses a mutex to prevent function logic from concurrent execution
+  const mutex = new Mutex()
+  const requestTranslationQuery = async () => {
+    try {
+      // Immediately fails if lock isn't available
+      await tryAcquire(mutex).runExclusive(async () => {
+        const text = finalTranscript?.trim()
+        setTranscriptLog(prev => appendToFixedSizeString(prev, ' ' + text, maxLogSize))
+        resetTranscript()
+        if (apiKey) {
+          await doQuery(text, usePost)
+        }
+      })
+    } catch (e) {
+      if (e !== E_ALREADY_LOCKED) {
+        logger.error('Error querying translation: ' + e)
       }
     }
   }
@@ -84,43 +108,39 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
   const reset = async () => {
     resetTranscript()
     setTranslation('')
+    setTranscriptLog('')
+    setTranslationLog('')
   }
 
   // Google Apps Script can throw CORS errors sometimes, even on GET
   // ref: https://stackoverflow.com/a/68933465
 
-  const doPost = async (text: string) => {
-    const query = `${transUrl}?source=${recogLang}&target=${transLang}`
-    logger.log('query: POST ' + query + ', body: ' + text)
-    try {
-      const resp = await axios.post(query, text, {
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8',
-        },
-      })
-      const trans = resp?.data || ''
-      logger.log('resp: ' + trans)
-      if (trans) {
-        setTranslation(trans)
-      }
-    } catch (e) {
-      logger.error(e)
+  const doQuery = async (text: string, usePost = false) => {
+    let query
+    if (usePost) {
+      query = `${transUrl}?source=${recogLang}&target=${transLang}`
+      logger.log('query: POST ' + query + ', body: ' + text)
+    } else {
+      query = `${transUrl}?text=${text}&source=${recogLang}&target=${transLang}`
+      logger.log('query: GET ' + query)
     }
-  }
-
-  const doGet = async (text: string) => {
-    const query = `${transUrl}?text=${text}&source=${recogLang}&target=${transLang}`
-    logger.log('query: GET ' + query)
     try {
-      const resp = await axios.get(query, {
+      const requestConfig = {
         headers: {
           'Content-Type': 'text/plain;charset=utf-8',
         },
-      })
+      }
+      let resp: AxiosResponse
+      if (usePost) {
+        resp = await axios.post(query, text, requestConfig)
+      } else {
+        resp = await axios.get(query, requestConfig)
+      }
       const trans = resp?.data || ''
       logger.log('resp: ' + trans)
       if (trans) {
         setTranslation(trans)
+        setTranslationLog(prev => appendToFixedSizeString(prev, ' ' + trans, maxLogSize))
       }
     } catch (e) {
       logger.error(e)
@@ -129,10 +149,14 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
 
   return {
     transcript: interimResults ? transcript : finalTranscript,
+    //transcript: transcriptLog,
     listening,
     reset,
     browserSupportsSpeechRecognition,
     isMicrophoneAvailable,
     translation,
+    //translation: translationLog,
+    transcriptLog,
+    translationLog,
   }
 }
