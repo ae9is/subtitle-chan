@@ -56,7 +56,10 @@ export function FontPickerOrCustom(props: FontPickerOrCustomProps) {
             onChange={handleChangeCheckbox}
             className="disabled:opacity-50"
           />
-          <label className="inline-block pl-[0.15rem] hover:cursor-pointer" htmlFor={customCheckboxId}>
+          <label
+            className="inline-block pl-[0.15rem] hover:cursor-pointer"
+            htmlFor={customCheckboxId}
+          >
             Custom?
           </label>
         </span>
