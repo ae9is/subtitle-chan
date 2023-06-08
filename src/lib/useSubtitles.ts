@@ -138,7 +138,7 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
       } else {
         resp = await axios.get(query, requestConfig)
       }
-      const trans = resp?.data || ''
+      const trans = resp?.data ?? ''
       logger.log('resp: ' + trans)
       if (trans) {
         setTranslation(trans)

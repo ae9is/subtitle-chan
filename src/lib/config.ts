@@ -111,7 +111,8 @@ export function saveConfig(key: string, value: any) {
 export function getConfig(key: string) {
   let value
   try {
-    value = JSON.parse(localStorage.getItem(key) || '') || undefined
+    const storageValue = localStorage.getItem(key) ?? ''
+    value = JSON.parse(storageValue) ?? undefined
   } catch (e) {
     value = undefined
   }
@@ -152,7 +153,7 @@ export function getAllConfig() {
 export function toUrlParams(config: Config) {
   const pairs: [string, string][] = Object.entries(config)
     .map(([key, value]) => {
-      if (key && value) {
+      if (key && value !== null && value !== undefined) {
         return [key, '' + value]
       }
       return undefined

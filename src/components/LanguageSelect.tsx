@@ -85,14 +85,14 @@ export function LanguageSelect({
   }
   const languageOptions: Option[] = Object.entries(languages).map(([key, value]) => {
     return {
-      value: key || '',
-      label: value[0] || '',
+      value: key ?? '',
+      label: value[0] ?? '',
     }
   })
 
   const defaultOption: Option = {
-    value: defaultValue || '',
-    label: defaultLabel || '',
+    value: defaultValue ?? '',
+    label: defaultLabel ?? '',
   }
 
   const [state, setState] = useState<ArrayObjectSelectState>({
