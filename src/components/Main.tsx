@@ -11,7 +11,7 @@ import { FontPickerOrCustom } from './FontPickerOrCustom'
 
 export function Main() {
   const config = getAllConfig()
-  const hideConfig = config.hideConfig ?? false
+  const [hideConfig, setHideConfig] = useState<boolean>(config.hideConfig ?? false)
   const [apiKey, setApiKey] = useState(config.apiKey)
   const minPhraseSepTime = 100
   const [phraseSepTime, setPhraseSepTime] = useState<number>(
@@ -212,6 +212,12 @@ export function Main() {
     saveConfig('showHistory', newValue)
   }
 
+  const onToggleHideConfig = () => {
+    const newValue = !hideConfig
+    setHideConfig(newValue)
+    saveConfig('hideConfig', newValue)
+  }
+
   return (
     <>
       <Subtitler
@@ -234,6 +240,8 @@ export function Main() {
         transFontStrokeWidth={transFontStrokeWidth}
         showFontTest={showFontTest}
         showHistory={showHistory}
+        hideConfig={hideConfig}
+        onToggleHideConfig={onToggleHideConfig}
       />
       {!hideConfig && (
         <div className="p-8 border border-gray-200">

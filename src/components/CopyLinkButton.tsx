@@ -1,5 +1,5 @@
 import { getAllConfig, toUrlParams } from '../lib/config'
-import { CopyIcon } from './CopyIcon'
+import { CopyIcon } from './icons/CopyIcon'
 
 export interface CopyLinkButtonProps
   extends React.DetailedHTMLProps<
