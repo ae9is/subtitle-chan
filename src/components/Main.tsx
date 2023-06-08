@@ -275,9 +275,10 @@ export function Main() {
                 {/* Better user experience storing API key as "password" in browser's password manager if we include a dummy username */}
                 <label hidden={true} htmlFor="dummyUser" />
                 <input
-                  type="username"
+                  type="text"
                   name="dummyUser"
                   id="dummyUser"
+                  autoComplete="username"
                   size={0}
                   hidden={true}
                   defaultValue="subtitle-chan"
@@ -289,6 +290,7 @@ export function Main() {
                   type="password"
                   name="apiKey"
                   id="apiKey"
+                  autoComplete="current-password"
                   onChange={onChangeApiKey}
                   defaultValue={apiKey}
                 />
