@@ -63,13 +63,18 @@ export function FontPickerOrCustom(props: FontPickerOrCustomProps) {
             Custom?
           </label>
         </span>
-        <Input
-          disabled={!useCustom}
-          name={customInputId}
-          onChange={handleChangeCustom}
-          defaultValue={defaultValueCustom}
-          placeholder={'Custom browser font'}
-        />
+        <label
+          className="hidden"
+          htmlFor={customInputId}
+        >
+          <Input
+            disabled={!useCustom}
+            id={customInputId}
+            onChange={handleChangeCustom}
+            defaultValue={defaultValueCustom}
+            placeholder={'Custom browser font'}
+          />
+        </label>
       </span>
     </>
   )
