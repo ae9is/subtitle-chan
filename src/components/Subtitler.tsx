@@ -27,6 +27,8 @@ export interface SubtitlerProps {
   showHistory?: boolean
   hideConfig?: boolean
   onToggleHideConfig?: () => void
+  recogHeight?: number
+  transHeight?: number
 }
 
 export function Subtitler({
@@ -51,6 +53,8 @@ export function Subtitler({
   showHistory,
   hideConfig = false,
   onToggleHideConfig,
+  recogHeight,
+  transHeight,
 }: SubtitlerProps) {
   const [enabled, setEnabled] = useState(false)
 
@@ -124,6 +128,7 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
           fontWeight={recogFontWeight}
           fontStrokeWidth={recogFontStrokeWidth}
           scrollBottom={false}
+          height={recogHeight}
         />
       )}
       <Subtitle
@@ -136,6 +141,7 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
         fontSize={recogFontSize}
         fontWeight={recogFontWeight}
         fontStrokeWidth={recogFontStrokeWidth}
+        height={recogHeight}
       />
       <Subtitle
         fontFamily={transFont}
@@ -148,6 +154,7 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
         fontWeight={transFontWeight}
         fontStrokeWidth={transFontStrokeWidth}
         scrollBottom={showHistory}
+        height={transHeight}
       />
       <div className="p-8 border border-gray-200">
         <div className="flex justify-between">

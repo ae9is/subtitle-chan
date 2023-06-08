@@ -1,6 +1,6 @@
+import { useEffect, useRef } from 'react'
 import cx from 'classnames'
 import './Subtitle.css'
-import { useEffect, useRef } from 'react'
 
 export interface SubtitleProps {
   value?: string
@@ -14,6 +14,7 @@ export interface SubtitleProps {
   fontStrokeWidth?: number
   inputId?: string
   scrollBottom?: boolean
+  height?: number
 }
 
 export function Subtitle(props: SubtitleProps) {
@@ -29,6 +30,7 @@ export function Subtitle(props: SubtitleProps) {
     fontStrokeWidth,
     inputId,
     scrollBottom = true,
+    height = 10,
   } = props
 
   // As alternative to -webkit-text-stroke, can also create text outline via drop shadow:
@@ -54,7 +56,8 @@ export function Subtitle(props: SubtitleProps) {
         className={cx(
           { 'border-b': bottomBorder },
           { 'bg-pure-green': !bgColor },
-          'h-40 p-4 border-gray-200 overflow-hidden'
+          { hidden: !height },
+          'p-4 border-gray-200 overflow-hidden'
         )}
         style={{
           backgroundColor: bgColor,
@@ -64,13 +67,16 @@ export function Subtitle(props: SubtitleProps) {
           ref={textarea}
           id={inputId}
           //className="schan-v-fade"
-          className="outline-none border-none leading-tight text-4xl font-bold scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block"
+          className={cx(
+            'outline-none border-none leading-tight text-4xl font-bold scrollbar-hide resize-none py-1 px-2 bg-transparent h-full w-full block'
+          )}
           style={{
             fontFamily,
             color: fontColor,
             WebkitTextStroke: textStroke,
             fontSize,
             fontWeight,
+            height: height + 'rem',
           }}
           value={value}
           onChange={scrollToBottom}

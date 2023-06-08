@@ -28,6 +28,8 @@ export interface Config {
   useCustomRecogFont?: boolean
   useCustomTransFont?: boolean
   showHistory?: boolean
+  recogHeight?: number
+  transHeight?: number
 }
 
 export const defaults = {
@@ -57,6 +59,8 @@ export const defaults = {
   useCustomRecogFont: false,
   useCustomTransFont: false,
   showHistory: false,
+  recogHeight: 10,
+  transHeight: 10,
 }
 
 export const ConfigKeys = [
@@ -87,6 +91,8 @@ export const ConfigKeys = [
   'useCustomRecogFont',
   'useCustomTransFont',
   'showHistory',
+  'recogHeight',
+  'transHeight',
 ]
 
 // Avoid race conditions by setting and getting localstorage keys individually
@@ -137,6 +143,8 @@ export function getAllConfig() {
     useCustomRecogFont: getConfig('useCustomRecogFont'),
     useCustomTransFont: getConfig('useCustomTransFont'),
     showHistory: getConfig('showHistory'),
+    recogHeight: getConfig('recogHeight'),
+    transHeight: getConfig('transHeight'),
   }
   return config
 }
@@ -180,6 +188,8 @@ export function getConfigFromUrlParams() {
     useCustomRecogFont: parseBoolean(params.get('useCustomRecogFont')),
     useCustomTransFont: parseBoolean(params.get('useCustomTransFont')),
     showHistory: parseBoolean(params.get('showHistory')),
+    recogHeight: parseNumber(params.get('recogHeight')),
+    transHeight: parseNumber(params.get('transHeight')),
   }
   return config
 }
