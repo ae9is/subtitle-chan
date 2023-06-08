@@ -28,6 +28,8 @@ export interface Config {
   useCustomRecogFont?: boolean
   useCustomTransFont?: boolean
   showHistory?: boolean
+  recogHeight?: number
+  transHeight?: number
 }
 
 export const defaults = {
@@ -57,6 +59,8 @@ export const defaults = {
   useCustomRecogFont: false,
   useCustomTransFont: false,
   showHistory: false,
+  recogHeight: 10,
+  transHeight: 10,
 }
 
 export const ConfigKeys = [
@@ -87,6 +91,8 @@ export const ConfigKeys = [
   'useCustomRecogFont',
   'useCustomTransFont',
   'showHistory',
+  'recogHeight',
+  'transHeight',
 ]
 
 // Avoid race conditions by setting and getting localstorage keys individually
@@ -105,7 +111,8 @@ export function saveConfig(key: string, value: any) {
 export function getConfig(key: string) {
   let value
   try {
-    value = JSON.parse(localStorage.getItem(key) || '') || undefined
+    const storageValue = localStorage.getItem(key) ?? ''
+    value = JSON.parse(storageValue) ?? undefined
   } catch (e) {
     value = undefined
   }
@@ -137,6 +144,8 @@ export function getAllConfig() {
     useCustomRecogFont: getConfig('useCustomRecogFont'),
     useCustomTransFont: getConfig('useCustomTransFont'),
     showHistory: getConfig('showHistory'),
+    recogHeight: getConfig('recogHeight'),
+    transHeight: getConfig('transHeight'),
   }
   return config
 }
@@ -144,7 +153,7 @@ export function getAllConfig() {
 export function toUrlParams(config: Config) {
   const pairs: [string, string][] = Object.entries(config)
     .map(([key, value]) => {
-      if (key && value) {
+      if (key && value !== null && value !== undefined) {
         return [key, '' + value]
       }
       return undefined
@@ -180,6 +189,8 @@ export function getConfigFromUrlParams() {
     useCustomRecogFont: parseBoolean(params.get('useCustomRecogFont')),
     useCustomTransFont: parseBoolean(params.get('useCustomTransFont')),
     showHistory: parseBoolean(params.get('showHistory')),
+    recogHeight: parseNumber(params.get('recogHeight')),
+    transHeight: parseNumber(params.get('transHeight')),
   }
   return config
 }

@@ -20,7 +20,7 @@ export function parseBoolean(value?: string | null): boolean | undefined {
 export function parseNumber(value?: string | null): number | undefined {
   let parsed
   if (value) {
-    parsed = Number(value) || undefined
+    parsed = Number(value) ?? undefined
     if (parsed && isNaN(parsed)) {
       parsed = undefined
     }

@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import SpeechRecognition, { useSubtitles } from '../lib/useSubtitles'
-import { MicIcon } from './MicIcon'
 import { Subtitle } from './Subtitle'
+import { IconToggle } from './IconToggle'
+import { MicIcon } from './icons/MicIcon'
+import { SettingsIcon } from './icons/SettingsIcon'
 
 export interface SubtitlerProps {
   apiKey?: string
@@ -23,6 +25,10 @@ export interface SubtitlerProps {
   transFontStrokeWidth: number
   showFontTest?: boolean
   showHistory?: boolean
+  hideConfig?: boolean
+  onToggleHideConfig?: () => void
+  recogHeight?: number
+  transHeight?: number
 }
 
 export function Subtitler({
@@ -45,6 +51,10 @@ export function Subtitler({
   transFontStrokeWidth,
   showFontTest,
   showHistory,
+  hideConfig = false,
+  onToggleHideConfig,
+  recogHeight,
+  transHeight,
 }: SubtitlerProps) {
   const [enabled, setEnabled] = useState(false)
 
@@ -118,6 +128,7 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
           fontWeight={recogFontWeight}
           fontStrokeWidth={recogFontStrokeWidth}
           scrollBottom={false}
+          height={recogHeight}
         />
       )}
       <Subtitle
@@ -130,6 +141,7 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
         fontSize={recogFontSize}
         fontWeight={recogFontWeight}
         fontStrokeWidth={recogFontStrokeWidth}
+        height={recogHeight}
       />
       <Subtitle
         fontFamily={transFont}
@@ -142,34 +154,46 @@ Nulla architecto corrupti et debitis rem. Ut soluta dolorum soluta sint qui dolo
         fontWeight={transFontWeight}
         fontStrokeWidth={transFontStrokeWidth}
         scrollBottom={showHistory}
+        height={transHeight}
       />
       <div className="p-8 border border-gray-200">
-        <div className="flex space-x-4">
-          <span className="py-2 px-4">
-            <MicIcon stroke={listening ? 'red' : 'black'} fill={listening ? 'red' : 'none'} />
-          </span>
-          {!enabled && (
+        <div className="flex justify-between">
+          <div className="flex space-x-4">
+            <span className="py-2 px-4">
+              <MicIcon stroke={listening ? 'red' : 'black'} fill={listening ? 'red' : 'none'} />
+            </span>
+            {!enabled && (
+              <button
+                onClick={handleStart}
+                className="w-32 py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 active:bg-green-700 disabled:opacity-50"
+              >
+                Start
+              </button>
+            )}
+            {enabled && (
+              <button
+                onClick={handleStop}
+                className="w-32 py-2 px-4 bg-red-500 text-white rounded hover:bg-red-600 active:bg-red-700 disabled:opacity-50"
+              >
+                Stop
+              </button>
+            )}
             <button
-              onClick={handleStart}
-              className="w-32 py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 active:bg-green-700 disabled:opacity-50"
+              onClick={handleReset}
+              className="py-2 px-4 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50"
             >
-              Start
+              Reset
             </button>
-          )}
-          {enabled && (
-            <button
-              onClick={handleStop}
-              className="w-32 py-2 px-4 bg-red-500 text-white rounded hover:bg-red-600 active:bg-red-700 disabled:opacity-50"
-            >
-              Stop
-            </button>
-          )}
-          <button
-            onClick={handleReset}
-            className="py-2 px-4 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50"
-          >
-            Reset
-          </button>
+          </div>
+          <div className="space-x-4">
+            <IconToggle
+              id="settingsToggle"
+              icon={<SettingsIcon fill={'white'} />}
+              label="Settings"
+              checked={!hideConfig}
+              onChange={onToggleHideConfig}
+            />
+          </div>
         </div>
       </div>
     </>

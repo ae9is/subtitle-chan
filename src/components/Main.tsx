@@ -11,7 +11,7 @@ import { FontPickerOrCustom } from './FontPickerOrCustom'
 
 export function Main() {
   const config = getAllConfig()
-  const hideConfig = config.hideConfig ?? false
+  const [hideConfig, setHideConfig] = useState<boolean>(config.hideConfig ?? false)
   const [apiKey, setApiKey] = useState(config.apiKey)
   const minPhraseSepTime = 100
   const [phraseSepTime, setPhraseSepTime] = useState<number>(
@@ -70,6 +70,8 @@ export function Main() {
   const [showHistory, setShowHistory] = useState<boolean>(
     config.showHistory ?? defaults.showHistory
   )
+  const [recogHeight, setRecogHeight] = useState<number>(config.recogHeight ?? defaults.recogHeight)
+  const [transHeight, setTransHeight] = useState<number>(config.transHeight ?? defaults.transHeight)
 
   const onChangeApiKey = (e: any) => {
     const newApiKey = e?.target?.value ?? ''
@@ -212,6 +214,26 @@ export function Main() {
     saveConfig('showHistory', newValue)
   }
 
+  const onToggleHideConfig = () => {
+    const newValue = !hideConfig
+    setHideConfig(newValue)
+    saveConfig('hideConfig', newValue)
+  }
+
+  const onChangeRecogHeight = (e: any) => {
+    const newValue = e?.target?.value
+    const newNum = Number(newValue) ?? recogHeight
+    setRecogHeight(newNum)
+    saveConfig('recogHeight', newNum)
+  }
+
+  const onChangeTransHeight = (e: any) => {
+    const newValue = e?.target?.value
+    const newNum = Number(newValue) ?? transHeight
+    setTransHeight(newNum)
+    saveConfig('transHeight', newNum)
+  }
+
   return (
     <>
       <Subtitler
@@ -234,6 +256,10 @@ export function Main() {
         transFontStrokeWidth={transFontStrokeWidth}
         showFontTest={showFontTest}
         showHistory={showHistory}
+        hideConfig={hideConfig}
+        onToggleHideConfig={onToggleHideConfig}
+        recogHeight={recogHeight}
+        transHeight={transHeight}
       />
       {!hideConfig && (
         <div className="p-8 border border-gray-200">
@@ -249,9 +275,10 @@ export function Main() {
                 {/* Better user experience storing API key as "password" in browser's password manager if we include a dummy username */}
                 <label hidden={true} htmlFor="dummyUser" />
                 <input
-                  type="username"
+                  type="text"
                   name="dummyUser"
                   id="dummyUser"
+                  autoComplete="username"
                   size={0}
                   hidden={true}
                   defaultValue="subtitle-chan"
@@ -263,6 +290,7 @@ export function Main() {
                   type="password"
                   name="apiKey"
                   id="apiKey"
+                  autoComplete="current-password"
                   onChange={onChangeApiKey}
                   defaultValue={apiKey}
                 />
@@ -412,6 +440,37 @@ export function Main() {
                 step={1}
                 defaultValue={transFontStrokeWidth}
                 onChange={onChangeTransFontStrokeWidth}
+              />
+            </div>
+          </div>
+
+          <div className="mt-8 grid lg:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="recogHeight" value={recogHeight + 'rem'}>
+                Transcript Box Height
+              </Label>
+              <Range
+                name="recogHeight"
+                id="recogHeight"
+                min={0}
+                max={36}
+                step={1}
+                defaultValue={recogHeight}
+                onChange={onChangeRecogHeight}
+              />
+            </div>
+            <div>
+              <Label htmlFor="transHeight" value={transHeight + 'rem'}>
+                Translation Box Height
+              </Label>
+              <Range
+                name="transHeight"
+                id="transHeight"
+                min={0}
+                max={36}
+                step={1}
+                defaultValue={transHeight}
+                onChange={onChangeTransHeight}
               />
             </div>
           </div>

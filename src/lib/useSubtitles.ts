@@ -85,7 +85,7 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
         clearTimeout(phraseTimer)
       }
     }
-  }, [finalTranscript, maxDelay, maxPhraseLength, minPhraseLength, phraseSepTime]) // User settings changes break transcript, could rework this
+  }, [finalTranscript, maxDelay, maxPhraseLength, minPhraseLength, phraseSepTime]) // User settings changes split transcript, could rework this
 
   // Can be called multiple times at once, but uses a mutex to prevent function logic from concurrent execution
   const mutex = new Mutex()
@@ -94,7 +94,7 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
       // Immediately fails if lock isn't available
       await tryAcquire(mutex).runExclusive(async () => {
         const text = finalTranscript?.trim()
-        setTranscriptLog(prev => appendToFixedSizeString(prev, ' ' + text, maxLogSize))
+        setTranscriptLog((prev) => appendToFixedSizeString(prev, ' ' + text, maxLogSize))
         resetTranscript()
         if (apiKey) {
           await doQuery(text, usePost)
@@ -138,18 +138,22 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
       } else {
         resp = await axios.get(query, requestConfig)
       }
-      const trans = resp?.data || ''
+      const trans = resp?.data ?? ''
       logger.log('resp: ' + trans)
       if (trans) {
         setTranslation(trans)
-        setTranslationLog(prev => appendToFixedSizeString(prev, ' ' + trans, maxLogSize))
+        setTranslationLog((prev) => appendToFixedSizeString(prev, ' ' + trans, maxLogSize))
       }
     } catch (e) {
       logger.error(e)
     }
   }
 
-  const returnedTranscript = showHistory ? transcriptLog : (interimResults ? transcript : finalTranscript)
+  const returnedTranscript = showHistory
+    ? transcriptLog
+    : interimResults
+    ? transcript
+    : finalTranscript
   const returnedTranslation = showHistory ? translationLog : translation
 
   return {
