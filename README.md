@@ -1,20 +1,22 @@
+__*Update: You might not need this project anymore. Chrome now supports live captions, the settings are at: chrome://settings/captions*__
+
 # subtitle-chan
 
 Forked from https://github.com/sayonari/jimakuChan (jimaku = subtitle) and rewritten for React + Vite + Typescript.
 
 Records live speech from the browser and uses the web speech api to perform transcription, with optional translation via an external api.
 
-# Requirements
+## Requirements
 
 * Any major browser other than Firefox
 * Translation service and API key (see below)
 
-# Usage
+## Usage
 
 You can deploy this app on your own service, or just try it out at the live github pages here:
 https://ae9is.github.io/subtitle-chan/
 
-# Transcription
+## Transcription
 
 Transcription, i.e. creating subtitles from speech, should just work as is if your browser is supported. Make sure Javascript is enabled and the page is allowed to connect to your mic.
 
@@ -22,7 +24,7 @@ The web speech api including speech recognition is not currently supported on Fi
 
 See here for a browser compatibility chart: https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API#api.speechrecognition
 
-# Translation
+## Translation
 
 Translation is handled via a Google App Script call to the Google Translate Language Service: https://developers.google.com/apps-script/reference/language
 
@@ -34,7 +36,7 @@ App Scripts don't require billing to be enabled on your Google account, so it sh
 
 Follow the steps below, or see this setup video for [jimakuChan](https://github.com/sayonari/jimakuChan): https://www.youtube.com/watch?v=dQG6ZRxMeBU
 
-## Steps:
+### Steps:
 
 1. Go to https://script.google.com/ and create a new project
 1. Copy and paste (and save!) the following into the new project's script, overwriting the contents *[it's OK to use jimakuChan's doGet() instead here]*:
