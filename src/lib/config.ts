@@ -160,7 +160,7 @@ export function toUrlParams(config: Config) {
     })
     .filter((x): x is [string, string] => !!x)
   const params = new URLSearchParams(pairs)
-  return '?' + params.toString() ?? ''
+  return '?' + params.toString()
 }
 
 export function getConfigFromUrlParams() {
