@@ -152,8 +152,8 @@ export function useSubtitles(props: useSubtitlesProps = {}) {
   const returnedTranscript = showHistory
     ? transcriptLog
     : interimResults
-    ? transcript
-    : finalTranscript
+      ? transcript
+      : finalTranscript
   const returnedTranslation = showHistory ? translationLog : translation
 
   return {

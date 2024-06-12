@@ -73,11 +73,7 @@ export function FontPickerOrCustom(props: FontPickerOrCustomProps) {
           defaultValue={defaultValueCustom}
           placeholder={'Custom browser font'}
         />
-        <label
-          className="hidden"
-          htmlFor={customInputId}
-        >
-        </label>
+        <label className="hidden" htmlFor={customInputId}></label>
       </span>
     </>
   )
