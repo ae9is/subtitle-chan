@@ -47,7 +47,10 @@ export function FontPickerOrCustom(props: FontPickerOrCustomProps) {
     <>
       <FontPicker autoLoad inputId={id} defaultValue={defaultValue} value={handleChange} />
       <span className="inline-flex gap-x-4 px-1 py-2 items-end">
-        <span className="inline-flex gap-x-2 mb-[0.125rem] min-h-[1.5rem] pl-[1.5rem]">
+        <span
+          className="inline-flex gap-x-2 mb-[0.125rem] min-h-[1.5rem] pl-[1.5rem]"
+          title="Custom font must already be loaded by browser!"
+        >
           <input
             id={customCheckboxId}
             name={customCheckboxId}
@@ -63,17 +66,17 @@ export function FontPickerOrCustom(props: FontPickerOrCustomProps) {
             Custom?
           </label>
         </span>
+        <Input
+          disabled={!useCustom}
+          id={customInputId}
+          onChange={handleChangeCustom}
+          defaultValue={defaultValueCustom}
+          placeholder={'Custom browser font'}
+        />
         <label
           className="hidden"
           htmlFor={customInputId}
         >
-          <Input
-            disabled={!useCustom}
-            id={customInputId}
-            onChange={handleChangeCustom}
-            defaultValue={defaultValueCustom}
-            placeholder={'Custom browser font'}
-          />
         </label>
       </span>
     </>
