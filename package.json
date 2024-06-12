@@ -1,6 +1,6 @@
 {
   "name": "subtitle-chan",
-  "version": "0.0.0",
+  "version": "0.1.2",
   "private": true,
   "description": "Live speech transcription and translation in your browser",
   "keywords": [
