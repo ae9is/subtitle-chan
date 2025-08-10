@@ -1,4 +1,4 @@
-__*Update: You might not need this project anymore. Chrome now supports live captions, the settings are at: chrome://settings/captions*__
+__*Update: You might not need this project anymore. Chrome now supports live captions, the settings are at: [chrome://settings/captions](chrome://settings/captions). You may also use the browser extension [Subtitle Anything](https://github.com/ae9is/subtitle-anything). This project still helps if you need to green screen your subtitles.__
 
 # subtitle-chan
 
